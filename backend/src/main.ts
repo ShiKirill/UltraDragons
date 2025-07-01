@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('API')
-    .setDescription('Matvey is GAY')
+    .setDescription('KIRILL is GAY')
     .setVersion('1.0')
     .addTag('gay')
     .build();
@@ -18,6 +18,5 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(port);
-  console.log(`Application is running on: http://localhost:${port}`);
 }
 bootstrap();
