@@ -1,5 +1,5 @@
 export default () => ({
-  port: parseInt(process.env.PORT || '3228', 10),
+  port: parseInt(process.env.PORT || '3001', 10),
   db: {
     type: process.env.DB_TYPE || 'postgres',
     host: process.env.DB_HOST || 'localhost',
