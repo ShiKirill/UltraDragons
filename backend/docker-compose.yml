@@ -11,10 +11,11 @@ services:
       - /usr/src/app/node_modules
     command: npm run start:dev
     ports:
-      - "3000:3000"
+      - "3228:3228"
     depends_on:
       - postgres
     environment:
+      - PORT=3228
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_USERNAME=postgres
