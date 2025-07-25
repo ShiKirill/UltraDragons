@@ -4,6 +4,7 @@
     "^react",
     "^next",
     "<THIRD_PARTY_MODULES>",
+    "^@/core/(.*)$",
     "^@/components/(.*)$",
     "^@/api/(.*)$",
     "^@/styles/(.*)$",
