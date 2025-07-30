@@ -3,6 +3,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CitiesModule } from './cities/cities.module';
 import { City } from './cities/entities/city.entity';
+import { UsersModule } from './users/users.module';
+import { PicturesModule } from './pictures/pictures.module';
+import { PlacesModule } from './places/places.module';
+import { InterestsModule } from './interests/interests.module';
+import { RoutesModule } from './routes/routes.module';
 import configuration from './config/config';
 
 @Module({
@@ -27,6 +32,11 @@ import configuration from './config/config';
       }),
     }),
     CitiesModule,
+    UsersModule,
+    PicturesModule,
+    PlacesModule,
+    InterestsModule,
+    RoutesModule,
   ],
 })
 export class AppModule { }
