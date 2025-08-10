@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
 
-export const Home = () => {
+export const HomeBlock = () => {
   return <Box>Home</Box>;
 };

@@ -1,6 +1,4 @@
-import { createStyleMap } from "@/shared/utils/createStyleMap";
-
-export const styles = createStyleMap(() => ({
+export const styles = {
   wrapper: {
     display: "flex",
     flexDirection: "column",
@@ -28,4 +26,4 @@ export const styles = createStyleMap(() => ({
     borderRadius: "16px",
     backgroundColor: "rgba(255, 255, 255, 0.9)",
   },
-}));
+};

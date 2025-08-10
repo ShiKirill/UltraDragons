@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { useRouter } from "next/router";
+
 import { Box } from "@mui/material";
 
 import { SideBar } from "@/components/base/SideBar";
@@ -12,6 +14,15 @@ interface IProps {
 }
 
 export const Layout = ({ children }: IProps) => {
+  const router = useRouter();
+
+  const pagesWithoutLayout = ["/404", "/500", "/_error"];
+  const isErrorPage = pagesWithoutLayout.includes(router.pathname);
+
+  if (isErrorPage) {
+    return <>{children}</>;
+  }
+
   return (
     <Box sx={styles.wrapper}>
       <Box sx={styles.mainContainer}>

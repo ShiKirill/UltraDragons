@@ -1,5 +1,5 @@
-import { Home } from "@/views/Home";
+import { HomeBlock } from "@/modules/home";
 
 export default function HomePage() {
-  return <Home />;
+  return <HomeBlock />;
 }
