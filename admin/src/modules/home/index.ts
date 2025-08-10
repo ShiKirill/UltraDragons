@@ -1,1 +1,1 @@
-export { HomeBlock } from "./components/HomeBlock/Home";
+export { HomeBlock } from "./components/home-block";

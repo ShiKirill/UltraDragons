@@ -1,7 +1,7 @@
 import { Dashboard as DashboardIcon } from "@mui/icons-material";
 import { Avatar, Box, Typography } from "@mui/material";
 
-import { styles } from "./AppHeader.styles";
+import { styles } from "./styles";
 
 export function AppHeader() {
   return (

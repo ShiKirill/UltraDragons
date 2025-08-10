@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 
 import { useRouter } from "next/router";
 
+import { SideBar } from "@/shared/components/base/sidebar";
+import { AppFooter } from "@/shared/components/layout/components/app-footer";
+import { AppHeader } from "@/shared/components/layout/components/app-header";
 import { Box } from "@mui/material";
 
-import { SideBar } from "@/components/base/SideBar";
-import { AppFooter, AppHeader } from "@/components/layout";
-
-import { styles } from "./Layout.styles";
+import { styles } from "./styles";
 
 interface IProps {
   children: ReactNode;

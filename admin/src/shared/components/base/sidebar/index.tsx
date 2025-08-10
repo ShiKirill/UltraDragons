@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import {
-  Analytics as AnalyticsIcon,
-  Dashboard as DashboardIcon,
-  Inventory as InventoryIcon,
-  People as PeopleIcon,
-} from "@mui/icons-material";
+import InterestsIcon from "@mui/icons-material/Interests";
 import {
   Box,
   List,
@@ -15,13 +10,14 @@ import {
   ListItemText,
 } from "@mui/material";
 
-import { styles } from "./SideBar.styles";
+import { styles } from "./styles";
 
 const mainNavItems = [
-  { href: "/dashboard", label: "Dashboard", icon: DashboardIcon },
-  { href: "/analytics", label: "Analytics", icon: AnalyticsIcon },
-  { href: "/users", label: "Users", icon: PeopleIcon },
-  { href: "/inventory", label: "Inventory", icon: InventoryIcon },
+  {
+    href: "/users-interests",
+    label: "Interests",
+    icon: InterestsIcon,
+  },
 ];
 
 export const SideBar = () => {

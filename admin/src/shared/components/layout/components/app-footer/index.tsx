@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-import { styles } from "./AppFooter.styles";
+import { styles } from "./styles";
 
 export function AppFooter() {
   return (
