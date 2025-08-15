@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateCityDto } from './dto/create-city.dto';
 import { City } from './entities/city.entity';
 
@@ -24,7 +24,7 @@ export class CitiesService {
         return this.citiesRepository.findOne({ where: { id } });
     }
 
-    async remove(id: number): Promise<void> {
-        await this.citiesRepository.delete(id);
+    remove(id: number) {
+        return this.citiesRepository.delete(id);
     }
 }

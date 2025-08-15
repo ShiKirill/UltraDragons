@@ -1,30 +1,57 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { PicturesService } from 'src/pictures/pictures.service';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User)
-    private readonly usersRepository: Repository<User>,
-  ) {}
+    constructor(
+        @InjectRepository(User)
+        private readonly userRepo: Repository<User>,
+        private readonly picturesService: PicturesService,
+    ) { }
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.usersRepository.create(createUserDto);
-    return this.usersRepository.save(user);
-  }
+    async findAll(): Promise<User[]> {
+        return this.userRepo.find({ relations: ['avatar', 'selectionSessions'] });
+    }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find({ relations: ['avatar'] });
-  }
+    async findOne(id: number): Promise<User> {
+        const user = await this.userRepo.findOne({
+            where: { id },
+            relations: ['avatar', 'selectionSessions'],
+        });
+        if (!user) throw new NotFoundException(`Пользователь с id=${id} не найден`);
+        return user;
+    }
 
-  findOne(id: number): Promise<User | null> {
-    return this.usersRepository.findOne({ where: { id }, relations: ['avatar'] });
-  }
+    async create(dto: CreateUserDto): Promise<User> {
+        let avatar: any = null;
+        if (dto.avatarId) {
+            avatar = await this.picturesService.findOne(dto.avatarId);
+            if (!avatar) throw new NotFoundException('Картинка-аватар не найдена');
+        }
+        const user = this.userRepo.create({
+            ...dto,
+            avatar,
+        });
+        return this.userRepo.save(user);
+    }
 
-  async remove(id: number): Promise<void> {
-    await this.usersRepository.delete(id);
-  }
+    async update(id: number, dto: UpdateUserDto): Promise<User> {
+        const user = await this.findOne(id);
+        if (dto.avatarId) {
+            const picture = await this.picturesService.findOne(dto.avatarId);
+            if (picture) user.avatar = picture;
+        }
+        Object.assign(user, dto);
+        return this.userRepo.save(user);
+    }
+
+    async remove(id: number): Promise<void> {
+        const user = await this.findOne(id);
+        await this.userRepo.remove(user);
+    }
 }

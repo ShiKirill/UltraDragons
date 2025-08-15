@@ -1,18 +1,33 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEmail, IsString, IsInt, IsBoolean, IsOptional } from 'class-validator';
+import { Role } from '../enums/role.enum';
 
 export class CreateUserDto {
-    @ApiProperty({ example: 'Иван', description: 'Имя пользователя' })
+    @ApiProperty()
+    @IsString()
     name: string;
 
-    @ApiProperty({ example: 'ivan@example.com', description: 'Email пользователя' })
+    @ApiProperty()
+    @IsEmail()
     email: string;
 
-    @ApiProperty({ example: true, description: 'Подтверждён ли email' })
-    email_confirmed: boolean;
+    @ApiPropertyOptional({ default: false })
+    @IsBoolean()
+    @IsOptional()
+    email_confirmed?: boolean = false;
 
-    @ApiProperty({ example: 1, description: 'Роль пользователя' })
-    role: number;
+    @ApiProperty({ enum: Role, required: false, default: Role.User })
+    @IsInt()
+    @IsOptional()
+    role?: Role = Role.User;
 
-    @ApiProperty({ example: 2, description: 'ID аватара (picture_id)' })
-    avatar_id: number;
+    @ApiPropertyOptional()
+    @IsInt()
+    @IsOptional()
+    avatarId?: number;
+
+    @ApiPropertyOptional({ default: false })
+    @IsBoolean()
+    @IsOptional()
+    is_deleted?: boolean = false;
 }

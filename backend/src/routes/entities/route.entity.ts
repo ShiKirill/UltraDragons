@@ -1,29 +1,35 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { RoutePlace } from './route-place.entity';
+import { SelectionSession } from 'src/selection-sessions/entities/selection-sessions.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Entity('routes')
 export class Route {
-    @PrimaryGeneratedColumn()
     @ApiProperty()
+    @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
     @ApiProperty()
-    name: string;
+    @Column({ name: 'session_id' })
+    sessionId: number;
 
-    @Column()
     @ApiProperty()
-    city_id: number;
+    @Column({ name: 'user_id' })
+    userId: number;
 
-    @Column({ type: 'json' })
     @ApiProperty()
-    start_point: { lat: number; lon: number };
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    created_at: Date;
 
-    @Column('int', { array: true, default: '{}' })
-    @ApiProperty()
-    accepted_places_ids: number[];
+    @ManyToOne(() => SelectionSession, session => session.routes, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'session_id' })
+    session: SelectionSession;
 
-    @Column('int', { array: true, default: '{}' })
-    @ApiProperty()
-    skipped_places_ids: number[];
+    @ManyToOne(() => User, user => user.id)
+    @JoinColumn({ name: 'user_id' })
+    user: User;
+
+    @OneToMany(() => RoutePlace, rp => rp.route, { cascade: true })
+    routePlaces: RoutePlace[];
 }

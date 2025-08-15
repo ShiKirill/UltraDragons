@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreatePictureDto } from './dto/create-picture.dto';
 import { Picture } from './entities/picture.entity';
 
@@ -22,6 +22,10 @@ export class PicturesService {
 
     findOne(id: number): Promise<Picture | null> {
         return this.picturesRepository.findOne({ where: { id } });
+    }
+
+    async findManyByIds(ids: number[]): Promise<Picture[]> {
+        return this.picturesRepository.find({ where: { id: In(ids) } });
     }
 
     async remove(id: number): Promise<void> {

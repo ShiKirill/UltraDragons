@@ -1,40 +1,41 @@
-import { Controller, Post, Get, Param, Body, Delete } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { User } from './entities/user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { UsersService } from './users.service';
 
-@ApiTags('users')
+@ApiTags('Пользователи')
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
-    @Post()
-    @ApiOperation({ summary: 'Создать пользователя' })
-    @ApiResponse({ status: 201, description: 'Пользователь создан', type: User })
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.usersService.create(createUserDto);
-    }
-
     @Get()
-    @ApiOperation({ summary: 'Получить всех пользователей' })
-    @ApiResponse({ status: 200, description: 'Список пользователей', type: [User] })
+    @ApiOperation({ summary: 'Список пользователей' })
     findAll() {
         return this.usersService.findAll();
     }
 
     @Get(':id')
-    @ApiOperation({ summary: 'Получить пользователя по ID' })
-    @ApiResponse({ status: 200, description: 'Информация о пользователе', type: User })
-    @ApiResponse({ status: 404, description: 'Пользователь не найден' })
+    @ApiOperation({ summary: 'Найти пользователя по id' })
     findOne(@Param('id') id: string) {
-        return this.usersService.findOne(+id);
+        return this.usersService.findOne(Number(id));
+    }
+
+    @Post()
+    @ApiOperation({ summary: 'Создать пользователя' })
+    create(@Body() dto: CreateUserDto) {
+        return this.usersService.create(dto);
+    }
+
+    @Put(':id')
+    @ApiOperation({ summary: 'Обновить пользователя' })
+    update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+        return this.usersService.update(Number(id), dto);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Удалить пользователя' })
-    @ApiResponse({ status: 200, description: 'Пользователь удалён' })
     remove(@Param('id') id: string) {
-        return this.usersService.remove(+id);
+        return this.usersService.remove(Number(id));
     }
 }

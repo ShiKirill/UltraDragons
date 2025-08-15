@@ -1,39 +1,41 @@
-import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { PlacesService } from './places.service';
+import { Controller, Get, Post, Put, Body, Delete, Param } from '@nestjs/common';
 import { CreatePlaceDto } from './dto/create-place.dto';
-import { Place } from './entities/place.entity';
+import { UpdatePlaceDto } from './dto/update-place.dto';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { PlacesService } from './places.service';
 
-@ApiTags('places')
+@ApiTags('Места')
 @Controller('places')
 export class PlacesController {
     constructor(private readonly placesService: PlacesService) { }
 
-    @Post()
-    @ApiOperation({ summary: 'Создать место' })
-    @ApiResponse({ status: 201, type: Place })
-    create(@Body() dto: CreatePlaceDto) {
-        return this.placesService.create(dto);
-    }
-
     @Get()
     @ApiOperation({ summary: 'Получить все места' })
-    @ApiResponse({ status: 200, type: [Place] })
     findAll() {
         return this.placesService.findAll();
     }
 
     @Get(':id')
-    @ApiOperation({ summary: 'Получить место по ID' })
-    @ApiResponse({ status: 200, type: Place })
+    @ApiOperation({ summary: 'Получить место по id' })
     findOne(@Param('id') id: string) {
-        return this.placesService.findOne(+id);
+        return this.placesService.findOne(Number(id));
+    }
+
+    @Post()
+    @ApiOperation({ summary: 'Создать место' })
+    create(@Body() dto: CreatePlaceDto) {
+        return this.placesService.create(dto);
+    }
+
+    @Put(':id')
+    @ApiOperation({ summary: 'Обновить место' })
+    update(@Param('id') id: string, @Body() dto: UpdatePlaceDto) {
+        return this.placesService.update(Number(id), dto);
     }
 
     @Delete(':id')
     @ApiOperation({ summary: 'Удалить место' })
-    @ApiResponse({ status: 200 })
     remove(@Param('id') id: string) {
-        return this.placesService.remove(+id);
+        return this.placesService.remove(Number(id));
     }
 }

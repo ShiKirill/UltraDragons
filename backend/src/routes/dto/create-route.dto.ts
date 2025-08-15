@@ -1,18 +1,22 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsInt, IsOptional, IsArray, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+
+class RoutePlaceDto {
+    @ApiProperty() @IsInt() place_id: number;
+    @ApiProperty({ enum: ['selected', 'skipped'] }) status: 'selected' | 'skipped';
+    @ApiProperty() @IsInt() visit_order: number;
+}
 
 export class CreateRouteDto {
-    @ApiProperty({ example: 'Маршрут по центру Москвы' })
-    name: string;
+    @ApiProperty() @IsInt() user_id: number;
+    @ApiProperty() @IsInt() session_id: number;
+    @ApiPropertyOptional() @IsOptional() created_at?: Date;
 
-    @ApiProperty({ example: 1, description: 'ID города' })
-    city_id: number;
-
-    @ApiProperty({ example: { lat: 55.75, lon: 37.6 } })
-    start_point: { lat: number; lon: number };
-
-    @ApiProperty({ example: [1, 2, 3], description: 'Принятые места' })
-    accepted_places_ids: number[];
-
-    @ApiProperty({ example: [4, 5], description: 'Пропущенные места' })
-    skipped_places_ids: number[];
+    @ApiPropertyOptional({ type: [RoutePlaceDto] })
+    @IsOptional()
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => RoutePlaceDto)
+    route_places?: RoutePlaceDto[];
 }
