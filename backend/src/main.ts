@@ -10,7 +10,7 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('API')
-    .setDescription('KIRILL is GAY')
+    .setDescription('MATVEY is GAY!!!!!!')
     .setVersion('1.0')
     .addTag('gay')
     .build();

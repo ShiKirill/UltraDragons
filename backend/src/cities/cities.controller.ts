@@ -11,21 +11,33 @@ export class CitiesController {
 
     @Post()
     @ApiOperation({ summary: 'Создать город' })
-    @ApiResponse({ status: 201, description: 'Город успешно создан', type: City })
+    @ApiResponse({
+        status: 201,
+        description: 'Город успешно создан',
+        type: City
+    })
     create(@Body() createCityDto: CreateCityDto) {
         return this.citiesService.create(createCityDto);
     }
 
     @Get()
     @ApiOperation({ summary: 'Получить все города' })
-    @ApiResponse({ status: 200, description: 'Список всех городов', type: [City] })
+    @ApiResponse({
+        status: 200,
+        description: 'Список всех городов',
+        type: [City]
+    })
     findAll() {
         return this.citiesService.findAll();
     }
 
     @Get(':id')
     @ApiOperation({ summary: 'Получить город по ID' })
-    @ApiResponse({ status: 200, description: 'Информация о городе', type: City })
+    @ApiResponse({
+        status: 200,
+        description: 'Информация о городе',
+        type: City
+    })
     @ApiResponse({ status: 404, description: 'Город не найден' })
     findOne(@Param('id') id: string) {
         return this.citiesService.findOne(+id);
