@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CitiesController } from './cities.controller';
 import { CitiesService } from './cities.service';
 import { City } from './entities/city.entity';
+import { Place } from 'src/places/entities/place.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([City])],
@@ -10,4 +11,4 @@ import { City } from './entities/city.entity';
   providers: [CitiesService],
   exports: [CitiesService],
 })
-export class CitiesModule {}
+export class CitiesModule { }
