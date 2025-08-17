@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import InterestsIcon from "@mui/icons-material/Interests";
 import {
   Box,
   List,
@@ -10,15 +9,8 @@ import {
   ListItemText,
 } from "@mui/material";
 
+import { mainNavItems } from "./constants";
 import { styles } from "./styles";
-
-const mainNavItems = [
-  {
-    href: "/users-interests",
-    label: "Interests",
-    icon: InterestsIcon,
-  },
-];
 
 export const SideBar = () => {
   const router = useRouter();

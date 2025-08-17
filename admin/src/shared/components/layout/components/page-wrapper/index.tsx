@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { Box, SxProps } from "@mui/material";
 
-import { styles } from "./PageWrapper.styles";
+import { styles } from "./styles";
 
 interface IProps {
   children: ReactNode;
