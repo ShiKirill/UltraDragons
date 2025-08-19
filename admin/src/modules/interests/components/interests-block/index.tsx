@@ -1,22 +1,34 @@
+import { useInterestsMutation } from "@/modules/interests/hooks/use-mutation";
 import { useInterestsQuery } from "@/modules/interests/hooks/use-query";
-import { AppTable } from "@/shared/components/base/app-table";
-import { HeaderBlock } from "@/shared/components/base/header-block";
-import { Box } from "@mui/material";
+import { CrudBlock } from "@/shared/components/base/crud-block/block";
 
-import { styles } from "./styles";
+import { IInterest, IInterestCreateDto } from "@/api/crud/interests/types";
+
+import { columns, formFields } from "./columns";
 
 export const InterestsBlock = () => {
   const { data: interests = [], isLoading } = useInterestsQuery();
+  const { createInterest, deleteInterest, isDeleting } = useInterestsMutation();
 
-  if (isLoading) {
-    return <Box>Loading...</Box>;
-  }
+  const handleCreate = (data: Partial<IInterest>) => {
+    createInterest(data as IInterestCreateDto);
+  };
+
+  const handleDelete = (item: IInterest) => {
+    deleteInterest(item.id);
+  };
 
   return (
-    <Box sx={styles.wrapper} component="section">
-      <HeaderBlock title="User interests" />
-
-      <AppTable data={interests} />
-    </Box>
+    <CrudBlock
+      title="User interests"
+      createLabel="Add interest"
+      data={interests}
+      isLoading={isLoading}
+      columns={columns}
+      formFields={formFields}
+      onCreate={handleCreate}
+      onDelete={handleDelete}
+      isDeleting={isDeleting}
+    />
   );
 };

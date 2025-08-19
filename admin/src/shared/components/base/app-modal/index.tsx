@@ -1,34 +1,39 @@
-import { useState } from "react";
-
-import { Box, Button, Modal, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { Box, IconButton, Modal, Typography } from "@mui/material";
 
 import { styles } from "./styles";
 
-export const AppModal = () => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+interface AppModalProps {
+  isOpen: boolean;
+  title: string;
+  children: React.ReactNode;
+  onClose: VoidFunction;
+}
 
+export const AppModal = ({
+  title,
+  children,
+  isOpen,
+  onClose,
+}: AppModalProps) => {
   return (
-    <>
-      <Button onClick={handleOpen}>Open modal</Button>
+    <Modal
+      open={isOpen}
+      onClose={onClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={styles.wrapper}>
+        <IconButton sx={styles.closeIcon} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
 
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={styles.wrapper}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
+        <Typography id="modal-modal-title" variant="h6" component="h2">
+          {title}
+        </Typography>
 
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal>
-    </>
+        {children}
+      </Box>
+    </Modal>
   );
 };

@@ -3,7 +3,8 @@ import axios, { isAxiosError } from "axios";
 
 import { RequestOptions } from "./types";
 
-export const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+export const BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3229";
 
 export class ApiError extends Error {
   errors: {

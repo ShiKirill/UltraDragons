@@ -11,5 +11,15 @@ export const styles = createStyleMap({
     border: "1px solid #000",
     borderRadius: "24px",
     p: "24px",
+    display: "flex",
+    flexDirection: "column",
+    rowGap: "16px",
+  },
+
+  closeIcon: {
+    position: "absolute",
+    top: "18px",
+    right: "18px",
+    cursor: "pointer",
   },
 });

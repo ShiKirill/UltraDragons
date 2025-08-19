@@ -1,4 +1,7 @@
-export interface Interest {
+export interface IInterest {
   id: string;
-  name: string;
+  title: string;
+  icon_url: string;
 }
+
+export type IInterestCreateDto = Omit<IInterest, "id">;

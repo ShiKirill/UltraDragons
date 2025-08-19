@@ -1,25 +1,24 @@
 import { ApiClient, BASE_URL } from "@/api/client";
 
-import mockData from "./mock-data.json";
-import { Interest } from "./types";
+import { IInterest } from "./types";
 
 export const INTERESTS_QUERY_KEY = "interests";
 
 class InterestsApi extends ApiClient {
   constructor() {
-    super(`${BASE_URL}/user-service/api/v1`);
+    super(`${BASE_URL}/interest-categories`);
   }
 
-  async getInterests(): Promise<Interest[]> {
-    // uses mock data
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(mockData.interests);
-      }, 1000);
-    });
+  async getInterests(): Promise<IInterest[]> {
+    return this.get<IInterest[]>("");
+  }
 
-    // uncomment to use real API:
-    // return this.get<UserInterestsList>("/web/user/profile");
+  async createInterest(data: Omit<IInterest, "id">): Promise<IInterest> {
+    return this.post<IInterest>("", data);
+  }
+
+  async deleteInterest(id: string): Promise<void> {
+    return this.delete<void>(`/${id}`);
   }
 }
 

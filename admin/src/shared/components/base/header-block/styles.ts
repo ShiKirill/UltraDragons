@@ -6,4 +6,10 @@ export const styles = createStyleMap({
     flexDirection: "column",
     rowGap: "8px",
   },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
 });
