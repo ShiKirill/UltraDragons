@@ -15,9 +15,11 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@/api/*": ["./src/api/*"],
+      "@/modules/*": ["./src/modules/*"],
       "@/components/*": ["./src/shared/components/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/shared/components/layout/components/page-wrapper/index.tsx"],
   "exclude": ["node_modules"]
 }

@@ -9,6 +9,31 @@ const components: Components<
       disableRipple: true,
     },
   },
+  MuiButton: {
+    styleOverrides: {
+      root: {
+        borderRadius: "12px",
+        textTransform: "none",
+        lineHeight: "24px",
+      },
+    },
+  },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      root: {
+        borderRadius: "12px",
+      },
+    },
+  },
+  MuiModal: {
+    styleOverrides: {
+      root: {
+        "& .MuiBox-root": {
+          border: "none",
+        },
+      },
+    },
+  },
   MuiCard: {
     styleOverrides: {
       root: {
