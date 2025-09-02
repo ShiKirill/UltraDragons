@@ -26,7 +26,7 @@ export const CrudForm = <T,>({
     .every((field) => data[field.key]);
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={2} component="form" onSubmit={onSubmit}>
       {fields.map((field) => (
         <TextField
           key={String(field.key)}
@@ -49,7 +49,7 @@ export const CrudForm = <T,>({
         </Button>
 
         <Button
-          onClick={onSubmit}
+          type="submit"
           variant="contained"
           disabled={!isValid || isSubmitting}
         >

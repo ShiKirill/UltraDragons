@@ -3,8 +3,7 @@ import {
   FormField,
 } from "@/shared/components/base/crud-block/types";
 
-import { ICity, ICityCreateDto } from "@/api/crud/citites/types";
-import { Typography } from "@mui/material";
+import { ICity, ICityCreateDto } from "@/api/crud/cities/types";
 
 export const formFields: FormField<ICityCreateDto>[] = [
   {
@@ -65,5 +64,4 @@ export const columns: ColumnConfig<ICity>[] = [
     key: "timezone",
     label: "Timezone",
   },
-
 ];

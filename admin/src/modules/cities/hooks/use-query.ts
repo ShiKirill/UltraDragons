@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { CITIES_QUERY_KEY, citiesApi } from "@/api/crud/citites";
+import { CITIES_QUERY_KEY, citiesApi } from "@/api/crud/cities";
 
 export const useCitiesQuery = () => {
   return useQuery({

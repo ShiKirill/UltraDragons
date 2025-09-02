@@ -2,8 +2,8 @@ import { CrudBlock } from "@/shared/components/base/crud-block/block";
 
 import { columns, formFields } from "./columns";
 import { useCitiesQuery } from "@/modules/cities/hooks/use-query";
-import { useCitiesMutation } from "../../hooks/use-mutation";
-import { ICity, ICityCreateDto } from "@/api/crud/citites/types";
+import { useCitiesMutation } from "@/modules/cities/hooks/use-mutation";
+import { ICity, ICityCreateDto } from "@/api/crud/cities/types";
 
 export const CitiesBlock = () => {
   const { data, isLoading } = useCitiesQuery();

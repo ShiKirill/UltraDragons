@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { CITIES_QUERY_KEY, citiesApi } from "@/api/crud/citites";
-import { ICityCreateDto } from "@/api/crud/citites/types";
+import { CITIES_QUERY_KEY, citiesApi } from "@/api/crud/cities";
+import { ICityCreateDto } from "@/api/crud/cities/types";
 
 export const useCitiesMutation = () => {
   const queryClient = useQueryClient();
