@@ -3,19 +3,19 @@ import { HeaderBlock } from "@/shared/components/base/header-block";
 import { useCrudState } from "@/shared/hooks/use-crud-state";
 import { Box } from "@mui/material";
 
-import { DeleteModal } from "../../app-modal/remove";
-import { CrudForm } from "../form";
-import { CrudTable } from "../table";
-import { ColumnConfig, FormField } from "../types";
+import { DeleteModal } from "@/shared/components/base/app-modal/remove";
+import { CrudForm } from "@/shared/components/base/crud-block/form";
+import { CrudTable } from "@/shared/components/base/crud-block/table";
+import { ColumnConfig, FormField } from "@/shared/components/base/crud-block/types";
 
 interface CrudBlockProps<T extends { id?: string | number }> {
   title: string;
-  data: T[];
+  data?: T[];
   isLoading?: boolean;
   columns?: ColumnConfig<T>[];
   formFields: FormField<T>[];
-  onCreate?: (data: Partial<T>) => void;
-  onUpdate?: (id: string | number, data: Partial<T>) => void;
+  onCreate?: (data: T) => void;
+  onUpdate?: (id: string | number, data: T) => void;
   onDelete?: (item: T) => void;
   createLabel?: string;
   isDeleting?: boolean;
@@ -23,7 +23,7 @@ interface CrudBlockProps<T extends { id?: string | number }> {
 
 export const CrudBlock = <T extends { id?: string | number }>({
   title,
-  data,
+  data = [],
   isLoading = false,
   columns,
   formFields,
@@ -55,7 +55,7 @@ export const CrudBlock = <T extends { id?: string | number }>({
   };
 
   const handleFieldChange = (field: keyof T, value: string) => {
-    actions.updateFormData({ [field]: value } as Partial<T>);
+    actions.updateFormData({ [field]: value } as T);
   };
 
   if (isLoading) {

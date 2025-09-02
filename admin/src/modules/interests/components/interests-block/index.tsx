@@ -7,11 +7,11 @@ import { IInterest, IInterestCreateDto } from "@/api/crud/interests/types";
 import { columns, formFields } from "./columns";
 
 export const InterestsBlock = () => {
-  const { data: interests = [], isLoading } = useInterestsQuery();
+  const { data, isLoading } = useInterestsQuery();
   const { createInterest, deleteInterest, isDeleting } = useInterestsMutation();
 
-  const handleCreate = (data: Partial<IInterest>) => {
-    createInterest(data as IInterestCreateDto);
+  const handleCreate = (data: IInterestCreateDto) => {
+    createInterest(data);
   };
 
   const handleDelete = (item: IInterest) => {
@@ -22,7 +22,7 @@ export const InterestsBlock = () => {
     <CrudBlock
       title="User interests"
       createLabel="Add interest"
-      data={interests}
+      data={data}
       isLoading={isLoading}
       columns={columns}
       formFields={formFields}

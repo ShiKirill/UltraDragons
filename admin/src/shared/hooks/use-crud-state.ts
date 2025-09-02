@@ -5,7 +5,7 @@ export interface CrudState<T> {
   isEditOpen: boolean;
   isDeleteOpen: boolean;
   editingItem: T | null;
-  formData: Partial<T>;
+  formData: T;
 }
 
 export const useCrudState = <T extends { id?: string | number }>() => {
@@ -14,14 +14,14 @@ export const useCrudState = <T extends { id?: string | number }>() => {
     isEditOpen: false,
     isDeleteOpen: false,
     editingItem: null,
-    formData: {},
+    formData: {} as T,
   });
 
   const openCreate = useCallback(() => {
     setState((prev) => ({
       ...prev,
       isCreateOpen: true,
-      formData: {},
+      formData: {} as T,
     }));
   }, []);
 
@@ -50,18 +50,18 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isEditOpen: false,
       isDeleteOpen: false,
       editingItem: null,
-      formData: {},
+      formData: {} as T,
     }));
   }, []);
 
-  const updateFormData = useCallback((updates: Partial<T>) => {
+  const updateFormData = useCallback((updates: T) => {
     setState((prev) => ({
       ...prev,
       formData: { ...prev.formData, ...updates },
     }));
   }, []);
 
-  const setFormData = useCallback((data: Partial<T>) => {
+  const setFormData = useCallback((data: T) => {
     setState((prev) => ({
       ...prev,
       formData: data,
