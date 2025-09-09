@@ -9,7 +9,7 @@ export class InterestCategoriesService {
     constructor(
         @InjectRepository(InterestCategory)
         private categoriesRepository: Repository<InterestCategory>,
-    ) { }
+    ) {}
 
     create(dto: CreateInterestCategoryDto): Promise<InterestCategory> {
         const category = this.categoriesRepository.create(dto);

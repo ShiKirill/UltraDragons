@@ -1,16 +1,29 @@
-import { Controller, Get, Post, Body, Param, Put, Delete, Query } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { PlaceSelectionsService } from './place-selections.service';
 import { CreatePlaceSelectionDto } from './dto/create-place-selection.dto';
 import { UpdatePlaceSelectionDto } from './dto/update-place-selection.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
-@ApiTags('PlaceSelections')
+@ApiTags(
+    'Выбор места (как будто можно на бек унести и не открывать наружу - это сам тиндер мест)',
+)
 @Controller('place-selections')
 export class PlaceSelectionsController {
-    constructor(private readonly service: PlaceSelectionsService) { }
+    constructor(private readonly service: PlaceSelectionsService) {}
 
     @Get()
-    @ApiOperation({ summary: 'Получить список всех выборов мест (для админки или аналитики)' })
+    @ApiOperation({
+        summary:
+            'Получить список всех выборов мест (для админки или аналитики)',
+    })
     findAll() {
         return this.service.findAll();
     }

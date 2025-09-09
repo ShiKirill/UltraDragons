@@ -5,14 +5,10 @@ import {
     IsOptional,
     IsNumber,
     IsArray,
-    Min,
-    Max,
     IsLatitude,
     IsLongitude,
-    ValidateNested,
-    ArrayMinSize
+    ArrayMinSize,
 } from 'class-validator';
-import { Type } from 'class-transformer';
 
 export class CreatePlaceDto {
     @ApiProperty({ example: 'Парк Горького', description: 'Название места' })
@@ -20,7 +16,10 @@ export class CreatePlaceDto {
     @IsString()
     name: string;
 
-    @ApiProperty({ example: 'Красивый городской парк...', description: 'Описание' })
+    @ApiProperty({
+        example: 'Красивый городской парк...',
+        description: 'Описание',
+    })
     @IsNotEmpty()
     @IsString()
     description: string;
@@ -30,12 +29,20 @@ export class CreatePlaceDto {
     @IsString()
     address: string;
 
-    @ApiProperty({ example: 'https://gorkypark.ru', description: 'Сайт', required: false })
+    @ApiProperty({
+        example: 'https://gorkypark.ru',
+        description: 'Сайт',
+        required: false,
+    })
     @IsOptional()
     @IsString()
     website?: string;
 
-    @ApiProperty({ example: '@gorkypark', description: 'Telegram', required: false })
+    @ApiProperty({
+        example: '@gorkypark',
+        description: 'Telegram',
+        required: false,
+    })
     @IsOptional()
     @IsString()
     tg?: string;
@@ -45,12 +52,20 @@ export class CreatePlaceDto {
     @IsString()
     zalo?: string;
 
-    @ApiProperty({ example: '10:00:00', description: 'Время начала работы (HH:mm:ss)', required: false })
+    @ApiProperty({
+        example: '10:00:00',
+        description: 'Время начала работы (HH:mm:ss)',
+        required: false,
+    })
     @IsOptional()
     @IsString()
     start_time?: string;
 
-    @ApiProperty({ example: '20:00:00', description: 'Время окончания работы (HH:mm:ss)', required: false })
+    @ApiProperty({
+        example: '20:00:00',
+        description: 'Время окончания работы (HH:mm:ss)',
+        required: false,
+    })
     @IsOptional()
     @IsString()
     end_time?: string;
@@ -68,17 +83,17 @@ export class CreatePlaceDto {
     @ApiProperty({
         example: [1, 2],
         description: 'Список ID категорий интересов',
-        required: false
+        required: false,
     })
-    @IsOptional()
     @IsArray()
+    @ArrayMinSize(1)
     @IsNumber({}, { each: true })
-    interest_category_ids?: number[];
+    interest_category_ids: number[];
 
     @ApiProperty({
         example: [1, 2],
         description: 'Список ID изображений',
-        required: false
+        required: false,
     })
     @IsOptional()
     @IsArray()
@@ -89,8 +104,4 @@ export class CreatePlaceDto {
     @IsNotEmpty()
     @IsNumber()
     city_id: number;
-
-    @ApiProperty({ example: false, description: 'Флаг удаления', required: false })
-    @IsOptional()
-    is_deleted?: boolean;
 }

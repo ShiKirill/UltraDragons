@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsString, IsIn, IsOptional } from 'class-validator';
+import { IsInt, IsIn, IsOptional } from 'class-validator';
 
 export class UpdatePlaceSelectionDto {
     @ApiProperty({
         enum: ['selected', 'skipped'],
         example: 'selected',
         description: 'Статус выбора',
-        required: false
+        required: false,
     })
     @IsOptional()
     @IsIn(['selected', 'skipped'])
@@ -15,7 +15,7 @@ export class UpdatePlaceSelectionDto {
     @ApiProperty({
         example: 2,
         description: 'Порядковый номер выбора',
-        required: false
+        required: false,
     })
     @IsOptional()
     @IsInt()

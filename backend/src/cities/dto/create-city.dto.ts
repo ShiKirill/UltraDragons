@@ -20,7 +20,7 @@ export class CreateCityDto {
     @ApiProperty({
         example: 55.8,
         description: 'Верхняя левая широта ограничивающего прямоугольника',
-        required: false
+        required: false,
     })
     @Min(-90)
     @Max(90)
@@ -30,7 +30,7 @@ export class CreateCityDto {
     @ApiProperty({
         example: 37.5,
         description: 'Верхняя левая долгота ограничивающего прямоугольника',
-        required: false
+        required: false,
     })
     @Min(-180)
     @Max(180)
@@ -40,7 +40,7 @@ export class CreateCityDto {
     @ApiProperty({
         example: 55.7,
         description: 'Нижняя правая широта ограничивающего прямоугольника',
-        required: false
+        required: false,
     })
     @Min(-90)
     @Max(90)
@@ -50,7 +50,7 @@ export class CreateCityDto {
     @ApiProperty({
         example: 37.7,
         description: 'Нижняя правая долгота ограничивающего прямоугольника',
-        required: false
+        required: false,
     })
     @Min(-180)
     @Max(180)
@@ -59,7 +59,7 @@ export class CreateCityDto {
 
     @ApiProperty({
         example: 'Europe/Moscow',
-        description: 'Часовой пояс города'
+        description: 'Часовой пояс города',
     })
     @IsNotEmpty()
     @IsString()

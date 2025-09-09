@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { SelectionSession } from 'src/selection-sessions/entities/selection-sessions.entity';
 import { Place } from 'src/places/entities/place.entity';
@@ -25,7 +31,9 @@ export class PlaceSelection {
     @Column()
     sequence: number;
 
-    @ManyToOne(() => SelectionSession, session => session.placeSelections, { onDelete: 'CASCADE' })
+    @ManyToOne(() => SelectionSession, (session) => session.placeSelections, {
+        onDelete: 'CASCADE',
+    })
     @JoinColumn({ name: 'session_id' })
     session: SelectionSession;
 

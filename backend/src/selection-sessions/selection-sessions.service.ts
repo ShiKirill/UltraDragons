@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+    BadRequestException,
+    Injectable,
+    NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -13,7 +17,7 @@ export class SelectionSessionsService {
         @InjectRepository(SelectionSession)
         private readonly sessionRepository: Repository<SelectionSession>,
         private readonly usersService: UsersService,
-    ) { }
+    ) {}
 
     async findAll(): Promise<SelectionSession[]> {
         return this.sessionRepository.find({
@@ -25,7 +29,13 @@ export class SelectionSessionsService {
     async findOne(id: number): Promise<SelectionSession> {
         const session = await this.sessionRepository.findOne({
             where: { id },
-            relations: ['user', 'interests', 'interests.interestCategory', 'placeSelections', 'routes'],
+            relations: [
+                'user',
+                'interests',
+                'interests.interestCategory',
+                'placeSelections',
+                'routes',
+            ],
         });
         if (!session) throw new NotFoundException(`Сессия id=${id} не найдена`);
         return session;
@@ -34,14 +44,26 @@ export class SelectionSessionsService {
     async create(dto: CreateSelectionSessionDto): Promise<SelectionSession> {
         const user = await this.usersService.findOne(dto.user_id);
         if (!user) throw new NotFoundException('Пользователь не найден');
+
+        if (!dto.interests_ids?.length) {
+            throw new BadRequestException(
+                'Сессия должна содержать хотя бы один интерес',
+            );
+        }
+
         const session = this.sessionRepository.create({
             user,
             is_completed: false,
+            interests: dto.interests_ids.map((id) => ({ id })),
         });
+
         return this.sessionRepository.save(session);
     }
 
-    async update(id: number, dto: UpdateSelectionSessionDto): Promise<SelectionSession> {
+    async update(
+        id: number,
+        dto: UpdateSelectionSessionDto,
+    ): Promise<SelectionSession> {
         const session = await this.findOne(id);
         Object.assign(session, dto);
         return this.sessionRepository.save(session);

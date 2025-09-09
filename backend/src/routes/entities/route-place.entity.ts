@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Route } from './route.entity';
 import { Place } from 'src/places/entities/place.entity';
@@ -25,7 +31,9 @@ export class RoutePlace {
     @Column({ name: 'visit_order' })
     visitOrder: number;
 
-    @ManyToOne(() => Route, route => route.routePlaces, { onDelete: 'CASCADE' })
+    @ManyToOne(() => Route, (route) => route.routePlaces, {
+        onDelete: 'CASCADE',
+    })
     @JoinColumn({ name: 'route_id' })
     route: Route;
 

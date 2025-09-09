@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+    Injectable,
+    NotFoundException,
+    BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Route } from './entities/route.entity';
@@ -19,7 +23,7 @@ export class RoutesService {
         private readonly sessionsService: SelectionSessionsService,
         private readonly userService: UsersService,
         private readonly placeService: PlacesService,
-    ) { }
+    ) {}
 
     async findAll(): Promise<Route[]> {
         return this.routeRepository.find({
@@ -47,12 +51,17 @@ export class RoutesService {
         if (dto.route_places?.length) {
             for (let rp of dto.route_places) {
                 const place = await this.placeService.findOne(rp.place_id);
-                if (!place) throw new NotFoundException(`Место id=${rp.place_id} не найдено`);
-                routePlaces.push(this.routePlaceRepository.create({
-                    place,
-                    status: rp.status,
-                    visitOrder: rp.visit_order,
-                }));
+                if (!place)
+                    throw new NotFoundException(
+                        `Место id=${rp.place_id} не найдено`,
+                    );
+                routePlaces.push(
+                    this.routePlaceRepository.create({
+                        place,
+                        status: rp.status,
+                        visitOrder: rp.visit_order,
+                    }),
+                );
             }
         }
 
@@ -60,7 +69,9 @@ export class RoutesService {
             user,
             session,
             created_at: dto.created_at,
-            routePlaces: routePlaces.length ? await this.routePlaceRepository.save(routePlaces) : [],
+            routePlaces: routePlaces.length
+                ? await this.routePlaceRepository.save(routePlaces)
+                : [],
         });
 
         return this.routeRepository.save(route);

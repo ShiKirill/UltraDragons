@@ -4,17 +4,17 @@ import { CitiesService } from './cities.service';
 import { CreateCityDto } from './dto/create-city.dto';
 import { City } from './entities/city.entity';
 
-@ApiTags('cities')
+@ApiTags('Города (вроде работает)')
 @Controller('cities')
 export class CitiesController {
-    constructor(private readonly citiesService: CitiesService) { }
+    constructor(private readonly citiesService: CitiesService) {}
 
     @Post()
     @ApiOperation({ summary: 'Создать город' })
     @ApiResponse({
         status: 201,
         description: 'Город успешно создан',
-        type: City
+        type: City,
     })
     create(@Body() createCityDto: CreateCityDto) {
         return this.citiesService.create(createCityDto);
@@ -25,7 +25,7 @@ export class CitiesController {
     @ApiResponse({
         status: 200,
         description: 'Список всех городов',
-        type: [City]
+        type: [City],
     })
     findAll() {
         return this.citiesService.findAll();
@@ -36,7 +36,7 @@ export class CitiesController {
     @ApiResponse({
         status: 200,
         description: 'Информация о городе',
-        type: City
+        type: City,
     })
     @ApiResponse({ status: 404, description: 'Город не найден' })
     findOne(@Param('id') id: string) {

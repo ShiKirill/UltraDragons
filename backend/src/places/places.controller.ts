@@ -1,13 +1,21 @@
-import { Controller, Get, Post, Put, Body, Delete, Param } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Put,
+    Body,
+    Delete,
+    Param,
+} from '@nestjs/common';
 import { CreatePlaceDto } from './dto/create-place.dto';
 import { UpdatePlaceDto } from './dto/update-place.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { PlacesService } from './places.service';
 
-@ApiTags('Места')
+@ApiTags('Места (вроде работает)')
 @Controller('places')
 export class PlacesController {
-    constructor(private readonly placesService: PlacesService) { }
+    constructor(private readonly placesService: PlacesService) {}
 
     @Get()
     @ApiOperation({ summary: 'Получить все места' })

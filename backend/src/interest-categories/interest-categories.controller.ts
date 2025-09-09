@@ -4,19 +4,19 @@ import { InterestCategoriesService } from './interest-categories.service';
 import { CreateInterestCategoryDto } from './dto/create-interest-category.dto';
 import { InterestCategory } from './entities/interest-category.entity';
 
-@ApiTags('interest-categories')
+@ApiTags('Категории интересов (вроде работает)')
 @Controller('interest-categories')
 export class InterestCategoriesController {
     constructor(
-        private readonly categoriesService: InterestCategoriesService
-    ) { }
+        private readonly categoriesService: InterestCategoriesService,
+    ) {}
 
     @Post()
     @ApiOperation({ summary: 'Создать категорию интересов' })
     @ApiResponse({
         status: 201,
         description: 'Категория успешно создана',
-        type: InterestCategory
+        type: InterestCategory,
     })
     create(@Body() dto: CreateInterestCategoryDto) {
         return this.categoriesService.create(dto);
@@ -27,7 +27,7 @@ export class InterestCategoriesController {
     @ApiResponse({
         status: 200,
         description: 'Список категорий',
-        type: [InterestCategory]
+        type: [InterestCategory],
     })
     findAll() {
         return this.categoriesService.findAll();
@@ -38,7 +38,7 @@ export class InterestCategoriesController {
     @ApiResponse({
         status: 200,
         description: 'Категория интересов',
-        type: InterestCategory
+        type: InterestCategory,
     })
     findOne(@Param('id') id: string) {
         return this.categoriesService.findOne(+id);
