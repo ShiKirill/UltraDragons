@@ -4,7 +4,9 @@ import { Type } from 'class-transformer';
 
 class RoutePlaceDto {
     @ApiProperty() @IsInt() place_id: number;
-    @ApiProperty({ enum: ['selected', 'skipped'] }) status: 'selected' | 'skipped';
+    @ApiProperty({ enum: ['selected', 'skipped'] }) status:
+        | 'selected'
+        | 'skipped';
     @ApiProperty() @IsInt() visit_order: number;
 }
 

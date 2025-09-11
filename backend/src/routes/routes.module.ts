@@ -10,14 +10,14 @@ import { PlacesModule } from '../places/places.module';
 import { SelectionSessionsModule } from 'src/selection-sessions/selection-sessions.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Route, RoutePlace]),
-    SelectionSessionsModule,
-    UsersModule,
-    PlacesModule,
-  ],
-  controllers: [RoutesController],
-  providers: [RoutesService],
-  exports: [RoutesService],
+    imports: [
+        TypeOrmModule.forFeature([Route, RoutePlace]),
+        SelectionSessionsModule,
+        UsersModule,
+        PlacesModule,
+    ],
+    controllers: [RoutesController],
+    providers: [RoutesService],
+    exports: [RoutesService],
 })
-export class RoutesModule { }
+export class RoutesModule {}

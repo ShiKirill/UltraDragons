@@ -13,14 +13,14 @@ export class CreatePlaceSelectionDto {
     @ApiProperty({
         enum: ['selected', 'skipped'],
         example: 'selected',
-        description: 'Статус выбора'
+        description: 'Статус выбора',
     })
     @IsIn(['selected', 'skipped'])
     status: string;
 
     @ApiProperty({
         example: 1,
-        description: 'Порядковый номер выбора'
+        description: 'Порядковый номер выбора',
     })
     @IsInt()
     sequence: number;

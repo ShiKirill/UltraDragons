@@ -8,14 +8,14 @@ import { PicturesModule } from 'src/pictures/pictures.module';
 import { InterestCategoriesModule } from 'src/interest-categories/interest-categories.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Place]),
-    CitiesModule,
-    PicturesModule,
-    InterestCategoriesModule
-  ],
-  controllers: [PlacesController],
-  providers: [PlacesService],
-  exports: [PlacesService],
+    imports: [
+        TypeOrmModule.forFeature([Place]),
+        CitiesModule,
+        PicturesModule,
+        InterestCategoriesModule,
+    ],
+    controllers: [PlacesController],
+    providers: [PlacesService],
+    exports: [PlacesService],
 })
-export class PlacesModule { }
+export class PlacesModule {}

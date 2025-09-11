@@ -6,12 +6,9 @@ import { SelectionSession } from './entities/selection-sessions.entity';
 import { UsersModule } from '../users/users.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([SelectionSession]),
-    UsersModule
-  ],
-  controllers: [SelectionSessionsController],
-  providers: [SelectionSessionsService],
-  exports: [SelectionSessionsService],
+    imports: [TypeOrmModule.forFeature([SelectionSession]), UsersModule],
+    controllers: [SelectionSessionsController],
+    providers: [SelectionSessionsService],
+    exports: [SelectionSessionsService],
 })
-export class SelectionSessionsModule { }
+export class SelectionSessionsModule {}

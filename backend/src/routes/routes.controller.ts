@@ -1,13 +1,21 @@
-import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Param,
+    Put,
+    Delete,
+} from '@nestjs/common';
 import { CreateRouteDto } from './dto/create-route.dto';
 import { UpdateRouteDto } from './dto/update-route.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { RoutesService } from './routes.service';
 
-@ApiTags('Маршруты')
+@ApiTags('Маршруты (пока не трогал, это на потом)')
 @Controller('routes')
 export class RoutesController {
-    constructor(private readonly routesService: RoutesService) { }
+    constructor(private readonly routesService: RoutesService) {}
 
     @Get()
     @ApiOperation({ summary: 'Получить список маршрутов' })
@@ -28,7 +36,9 @@ export class RoutesController {
     }
 
     @Put(':id')
-    @ApiOperation({ summary: 'Обновить маршрут (например, изменить состав мест)' })
+    @ApiOperation({
+        summary: 'Обновить маршрут (например, изменить состав мест)',
+    })
     update(@Param('id') id: string, @Body() dto: UpdateRouteDto) {
         return this.routesService.update(Number(id), dto);
     }

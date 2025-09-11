@@ -9,7 +9,7 @@ export class PicturesService {
     constructor(
         @InjectRepository(Picture)
         private readonly picturesRepository: Repository<Picture>,
-    ) { }
+    ) {}
 
     create(createPictureDto: CreatePictureDto): Promise<Picture> {
         const picture = this.picturesRepository.create(createPictureDto);

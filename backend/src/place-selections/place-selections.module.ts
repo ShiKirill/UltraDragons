@@ -7,13 +7,13 @@ import { SelectionSessionsModule } from '../selection-sessions/selection-session
 import { PlacesModule } from '../places/places.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([PlaceSelection]),
-    SelectionSessionsModule,
-    PlacesModule,
-  ],
-  controllers: [PlaceSelectionsController],
-  providers: [PlaceSelectionsService],
-  exports: [PlaceSelectionsService],
+    imports: [
+        TypeOrmModule.forFeature([PlaceSelection]),
+        SelectionSessionsModule,
+        PlacesModule,
+    ],
+    controllers: [PlaceSelectionsController],
+    providers: [PlaceSelectionsService],
+    exports: [PlaceSelectionsService],
 })
-export class PlaceSelectionsModule { }
+export class PlaceSelectionsModule {}

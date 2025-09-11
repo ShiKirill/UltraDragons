@@ -1,7 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePictureDto {
-    @ApiProperty({ example: 'https://example.com/image.jpg', description: 'URL изображения' })
+    @ApiProperty({
+        example: 'https://example.com/image.jpg',
+        description: 'URL изображения',
+    })
     url: string;
 
     @ApiProperty({ example: 'image.jpg', description: 'Имя файла' })

@@ -9,7 +9,7 @@ export class CitiesService {
     constructor(
         @InjectRepository(City)
         private citiesRepository: Repository<City>,
-    ) { }
+    ) {}
 
     create(createCityDto: CreateCityDto): Promise<City> {
         const city = this.citiesRepository.create(createCityDto);

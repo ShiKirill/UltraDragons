@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString, IsUrl } from 'class-validator';
 export class CreateInterestCategoryDto {
     @ApiProperty({
         example: 'Кофейни',
-        description: 'Название категории интересов'
+        description: 'Название категории интересов',
     })
     @IsNotEmpty()
     @IsString()
@@ -12,7 +12,7 @@ export class CreateInterestCategoryDto {
 
     @ApiProperty({
         example: 'https://example.com/icons/coffee.png',
-        description: 'URL иконки категории'
+        description: 'URL иконки категории',
     })
     @IsUrl()
     icon_url: string;

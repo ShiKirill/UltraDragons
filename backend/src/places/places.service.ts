@@ -18,7 +18,7 @@ export class PlacesService {
         private readonly citiesService: CitiesService,
         private readonly pictureService: PicturesService,
         private readonly interestCategoryService: InterestCategoriesService,
-    ) { }
+    ) {}
 
     async findAll(): Promise<Place[]> {
         return this.placeRepository.find({
@@ -42,7 +42,10 @@ export class PlacesService {
 
         let interestCategories: InterestCategory[] = [];
         if (dto.interest_category_ids?.length) {
-            interestCategories = await this.interestCategoryService.findManyByIds(dto.interest_category_ids);
+            interestCategories =
+                await this.interestCategoryService.findManyByIds(
+                    dto.interest_category_ids,
+                );
         }
 
         let pictures: Picture[] = [];
@@ -64,13 +67,18 @@ export class PlacesService {
         const place = await this.findOne(id);
         if (dto.city_id) {
             const city = await this.citiesService.findOne(dto.city_id);
-            if (city) place.city
+            if (city) place.city;
         }
         if (dto.interest_category_ids) {
-            place.interestCategories = await this.interestCategoryService.findManyByIds(dto.interest_category_ids);
+            place.interestCategories =
+                await this.interestCategoryService.findManyByIds(
+                    dto.interest_category_ids,
+                );
         }
         if (dto.picture_ids) {
-            place.pictures = await this.pictureService.findManyByIds(dto.picture_ids);
+            place.pictures = await this.pictureService.findManyByIds(
+                dto.picture_ids,
+            );
         }
         Object.assign(place, dto);
         return this.placeRepository.save(place);

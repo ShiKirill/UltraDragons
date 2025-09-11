@@ -1,13 +1,23 @@
-import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Put,
+    Delete,
+    Param,
+    Body,
+} from '@nestjs/common';
 import { CreateSelectionSessionDto } from './dto/create-selection-session.dto';
 import { UpdateSelectionSessionDto } from './dto/update-selection-session.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { SelectionSessionsService } from './selection-sessions.service';
 
-@ApiTags('Сессии выбора')
+@ApiTags(
+    'Сессии выбора (тут точно создание работает и получение, апдейт врят ли)',
+)
 @Controller('selection-sessions')
 export class SelectionSessionsController {
-    constructor(private readonly sessionsService: SelectionSessionsService) { }
+    constructor(private readonly sessionsService: SelectionSessionsService) {}
 
     @Get()
     @ApiOperation({ summary: 'Получить список всех сессий' })

@@ -1,9 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+    OneToMany,
+    ManyToMany,
+    JoinTable,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from 'src/users/entities/user.entity';
 import { PlaceSelection } from 'src/place-selections/entities/place-selections.entity';
 import { Route } from 'src/routes/entities/route.entity';
-import { SelectionSessionInterest } from '../../selection-session-interests/entities/selection-session-interests.entity';
+import { InterestCategory } from 'src/interest-categories/entities/interest-category.entity';
 
 @Entity('selection_sessions')
 export class SelectionSession {
@@ -23,16 +32,33 @@ export class SelectionSession {
     @Column({ default: false })
     is_completed: boolean;
 
-    @ManyToOne(() => User, user => user.selectionSessions)
+    @ManyToOne(() => User, (user) => user.selectionSessions)
     @JoinColumn({ name: 'user_id' })
     user: User;
 
-    @OneToMany(() => SelectionSessionInterest, i => i.session, { cascade: true })
-    interests: SelectionSessionInterest[];
+    @ManyToMany(
+        () => InterestCategory,
+        (interest) => interest.selectionSessions,
+        {
+            cascade: true,
+        },
+    )
+    @JoinTable({
+        name: 'selection_session_interests', // имя промежуточной таблицы
+        joinColumn: {
+            name: 'session_id',
+            referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+            name: 'interest_id',
+            referencedColumnName: 'id',
+        },
+    })
+    interests: InterestCategory[];
 
-    @OneToMany(() => PlaceSelection, ps => ps.session, { cascade: true })
+    @OneToMany(() => PlaceSelection, (ps) => ps.session, { cascade: true })
     placeSelections: PlaceSelection[];
 
-    @OneToMany(() => Route, route => route.session, { cascade: true })
+    @OneToMany(() => Route, (route) => route.session, { cascade: true })
     routes: Route[];
 }

@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+    OneToMany,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Picture } from '../../pictures/entities/picture.entity';
 import { Role } from '../enums/role.enum';
@@ -25,7 +32,7 @@ export class User {
     @ApiProperty({
         enum: Role,
         example: Role.User,
-        description: 'Роль пользователя (0 - пользователь, 1 - админ)'
+        description: 'Роль пользователя (0 - пользователь, 1 - админ)',
     })
     @Column({ type: 'int' })
     role: Role;
@@ -35,7 +42,11 @@ export class User {
     avatarId: number;
 
     @ApiProperty({ type: () => Picture, required: false, nullable: true })
-    @ManyToOne(() => Picture, { nullable: true, eager: true, onDelete: 'SET NULL' })
+    @ManyToOne(() => Picture, {
+        nullable: true,
+        eager: true,
+        onDelete: 'SET NULL',
+    })
     @JoinColumn({ name: 'avatar_id' })
     avatar: Picture;
 
@@ -48,6 +59,6 @@ export class User {
     is_deleted: boolean;
 
     @ApiProperty({ type: () => [SelectionSession] })
-    @OneToMany(() => SelectionSession, session => session.user)
+    @OneToMany(() => SelectionSession, (session) => session.user)
     selectionSessions: SelectionSession[];
 }

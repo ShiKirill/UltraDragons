@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    JoinColumn,
+    ManyToMany,
+    JoinTable,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { City } from 'src/cities/entities/city.entity';
 import { Picture } from 'src/pictures/entities/picture.entity';
@@ -55,7 +63,7 @@ export class Place {
     is_deleted: boolean;
 
     @ApiProperty({ type: () => City })
-    @ManyToOne(() => City, city => city.places, { eager: true })
+    @ManyToOne(() => City, (city) => city.places, { eager: true })
     @JoinColumn({ name: 'city_id' })
     city: City;
 
@@ -71,7 +79,10 @@ export class Place {
     @JoinTable({
         name: 'place_interest_category',
         joinColumn: { name: 'place_id', referencedColumnName: 'id' },
-        inverseJoinColumn: { name: 'interest_category_id', referencedColumnName: 'id' },
+        inverseJoinColumn: {
+            name: 'interest_category_id',
+            referencedColumnName: 'id',
+        },
     })
     interestCategories: InterestCategory[];
 }

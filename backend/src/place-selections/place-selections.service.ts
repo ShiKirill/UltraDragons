@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+    Injectable,
+    NotFoundException,
+    BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -15,13 +19,15 @@ export class PlaceSelectionsService {
         private readonly selectionsRepository: Repository<PlaceSelection>,
         private readonly sessionsService: SelectionSessionsService,
         private readonly placesService: PlacesService,
-    ) { }
+    ) {}
 
     async create(dto: CreatePlaceSelectionDto): Promise<PlaceSelection> {
         const session = await this.sessionsService.findOne(dto.session_id);
         if (!session) throw new BadRequestException('Сессия не найдена');
         if (session.is_completed) {
-            throw new BadRequestException('Сессия уже завершена, нельзя добавить новые выборы');
+            throw new BadRequestException(
+                'Сессия уже завершена, нельзя добавить новые выборы',
+            );
         }
         const place = await this.placesService.findOne(dto.place_id);
         if (!place) throw new BadRequestException('Место не найдено');
@@ -47,7 +53,12 @@ export class PlaceSelectionsService {
 
     async findAll(): Promise<PlaceSelection[]> {
         return this.selectionsRepository.find({
-            relations: ['session', 'place', 'place.city', 'place.interestCategories'],
+            relations: [
+                'session',
+                'place',
+                'place.city',
+                'place.interestCategories',
+            ],
             order: { sequence: 'ASC' },
         });
     }
@@ -65,7 +76,10 @@ export class PlaceSelectionsService {
         return selection;
     }
 
-    async update(id: number, dto: UpdatePlaceSelectionDto): Promise<PlaceSelection> {
+    async update(
+        id: number,
+        dto: UpdatePlaceSelectionDto,
+    ): Promise<PlaceSelection> {
         const selection = await this.findOne(id);
 
         if (dto.status !== undefined) {
