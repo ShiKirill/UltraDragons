@@ -6,15 +6,21 @@ export interface CrudState<T> {
   isDeleteOpen: boolean;
   editingItem: T | null;
   formData: T;
+  modalTitle: string;
 }
 
-export const useCrudState = <T extends { id?: string | number }>() => {
+export const useCrudState = <T extends { id?: string | number }>({
+  entityName,
+}: {
+  entityName?: string;
+}) => {
   const [state, setState] = useState<CrudState<T>>({
     isCreateOpen: false,
     isEditOpen: false,
     isDeleteOpen: false,
     editingItem: null,
     formData: {} as T,
+    modalTitle: "",
   });
 
   const openCreate = useCallback(() => {
@@ -22,6 +28,7 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       ...prev,
       isCreateOpen: true,
       formData: {} as T,
+      modalTitle: `Add ${entityName}`,
     }));
   }, []);
 
@@ -31,6 +38,7 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isEditOpen: true,
       editingItem: item,
       formData: { ...item },
+      modalTitle: `Edit ${entityName}`,
     }));
   }, []);
 
@@ -40,6 +48,7 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isDeleteOpen: true,
       editingItem: item,
       formData: { ...item },
+      modalTitle: `Delete ${entityName}`,
     }));
   }, []);
 
@@ -51,6 +60,7 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isDeleteOpen: false,
       editingItem: null,
       formData: {} as T,
+      modalTitle: "",
     }));
   }, []);
 

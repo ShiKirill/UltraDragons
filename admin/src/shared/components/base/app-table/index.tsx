@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-import { ColumnConfig } from "../types";
+import { ColumnConfig } from "./types";
 
 interface CrudTableProps<T extends { id?: string | number }> {
   data: T[];
@@ -42,24 +42,26 @@ export const CrudTable = <T extends { id?: string | number }>({
     : autoColumns;
 
   const renderCell = (column: ColumnConfig<T>, row: T) => {
+    const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      onEdit?.(row);
+    };
+
+    const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      onDelete?.(row);
+    };
+
     if (column.key === "actions") {
       return (
         <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>
           {onEdit && (
-            <IconButton
-              size="small"
-              onClick={() => onEdit(row)}
-              color="primary"
-            >
+            <IconButton size="small" onClick={handleEdit} color="primary">
               <Edit fontSize="small" />
             </IconButton>
           )}
           {onDelete && (
-            <IconButton
-              size="small"
-              onClick={() => onDelete(row)}
-              color="error"
-            >
+            <IconButton size="small" onClick={handleDelete} color="error">
               <Delete fontSize="small" />
             </IconButton>
           )}
@@ -69,14 +71,14 @@ export const CrudTable = <T extends { id?: string | number }>({
 
     const value = row[column.key];
     if (column.render) {
-      return column.render(String(value), row);
+      return column.render(value, row);
     }
 
     return String(value || "");
   };
 
   return (
-    <TableContainer>
+    <TableContainer sx={{ flex: 1 }}>
       <Table aria-label="crud table">
         <TableHead>
           <TableRow>

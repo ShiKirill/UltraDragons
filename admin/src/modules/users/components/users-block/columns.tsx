@@ -1,23 +1,9 @@
-import {
-  ColumnConfig,
-  FormField,
-} from "@/shared/components/base/crud-block/types";
+import { ColumnConfig } from "@/shared/components/base/app-table/types";
+import { ROLES_MAP } from "@/shared/constants";
+import { Role } from "@/shared/types/app";
+import { Typography } from "@mui/material";
 
-import { IUser, IUserCreateDto } from "@/api/crud/users/types";
-
-export const formFields: FormField<IUserCreateDto>[] = [
-  {
-    key: "name",
-    placeholder: "Enter user name",
-    required: true,
-  },
-  {
-    key: "email",
-    placeholder: "Enter user email",
-    required: true,
-    type: "email",
-  },
-];
+import { IUser } from "@/api/crud/users/types";
 
 export const columns: ColumnConfig<IUser>[] = [
   {
@@ -35,5 +21,8 @@ export const columns: ColumnConfig<IUser>[] = [
   {
     key: "role",
     label: "Role",
+    render: (value) => {
+      return <Typography>{ROLES_MAP[value as Role]}</Typography>;
+    },
   },
 ];

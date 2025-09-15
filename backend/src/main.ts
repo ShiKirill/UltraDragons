@@ -8,6 +8,17 @@ async function bootstrap() {
     const configService = app.get(ConfigService);
     const port = configService.get<number>('port') || 3228;
 
+    // Enable CORS for localhost
+    app.enableCors({
+        origin: [
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'http://127.0.0.1:3000',
+            'http://127.0.0.1:3001',
+        ],
+        credentials: true,
+    });
+
     const config = new DocumentBuilder()
         .setTitle('API')
         .setDescription('MATVEY is GAY!!!!!!')

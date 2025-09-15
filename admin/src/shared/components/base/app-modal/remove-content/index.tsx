@@ -1,28 +1,22 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 
-interface DeleteModalProps<T> {
-  item: T | null;
+interface RemoveContentProps {
+  removingItemName: string;
   title: string;
-  itemNameField: keyof T;
   onSubmit: () => void;
   onCancel: () => void;
   submitLabel?: string;
   isSubmitting?: boolean;
 }
 
-export const DeleteModal = <T,>({
-  item,
+export const RemoveContent = ({
+  removingItemName,
   title,
-  itemNameField,
   onSubmit,
   onCancel,
   submitLabel = "Delete",
   isSubmitting = false,
-}: DeleteModalProps<T>) => {
-  if (!item) return null;
-
-  const itemName = String(item[itemNameField] || "Unknown");
-
+}: RemoveContentProps) => {
   return (
     <Stack spacing={2}>
       <Typography variant="body1" color="text.secondary">
@@ -30,7 +24,7 @@ export const DeleteModal = <T,>({
       </Typography>
 
       <Typography component="div" color="warning.main">
-        {itemName}
+        {removingItemName}
       </Typography>
 
       <Box sx={{ display: "flex", gap: 1, justifyContent: "flex-end" }}>

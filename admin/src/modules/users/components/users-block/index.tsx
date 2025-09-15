@@ -1,39 +1,73 @@
 import { useUsersMutation } from "@/modules/users/hooks/use-mutation";
 import { useUsersQuery } from "@/modules/users/hooks/use-query";
-import { CrudBlock } from "@/shared/components/base/crud-block/block";
+import { AppModal } from "@/shared/components/base/app-modal";
+import { RemoveContent } from "@/shared/components/base/app-modal/remove-content";
+import { CrudTable } from "@/shared/components/base/app-table";
+import { HeaderBlock } from "@/shared/components/base/header-block";
+import { useCrudState } from "@/shared/hooks/use-crud-state";
+import { Box } from "@mui/material";
 
 import { IUser, IUserCreateDto, IUserUpdateDto } from "@/api/crud/users/types";
 
-import { columns, formFields } from "./columns";
+import { UserForm } from "../form";
+import { columns } from "./columns";
+import { styles } from "./styles";
 
 export const UsersBlock = () => {
-  const { data, isLoading } = useUsersQuery();
-  const { createUser, updateUser, deleteUser, isDeleting } = useUsersMutation();
+  const { data = [] } = useUsersQuery();
+  const { createUser, updateUser, deleteUser } = useUsersMutation();
+  const { state, actions } = useCrudState<IUser>({ entityName: "user" });
 
-  const handleCreate = (data: IUserCreateDto) => {
-    createUser(data);
+  const handleSubmit = (data: IUserCreateDto | IUserUpdateDto) => {
+    if ("id" in data) {
+      updateUser(data);
+    } else {
+      createUser(data);
+    }
   };
 
-  const handleUpdate = (data: IUserUpdateDto) => {
-    updateUser(data);
-  };
-
-  const handleDelete = (item: IUser) => {
-    deleteUser(item.id);
+  const handleDelete = () => {
+    if (!state.editingItem?.id) return;
+    deleteUser(state.editingItem?.id);
+    actions.closeModals();
   };
 
   return (
-    <CrudBlock
-      title="Users"
-      createLabel="Add user"
-      data={data}
-      isLoading={isLoading}
-      columns={columns}
-      formFields={formFields}
-      onCreate={handleCreate}
-      onUpdate={handleUpdate}
-      onDelete={handleDelete}
-      isDeleting={isDeleting}
-    />
+    <Box sx={styles.wrapper} component="section">
+      <HeaderBlock
+        title="Users"
+        actions={[{ label: "Add place", onClick: actions.openCreate }]}
+      />
+
+      <CrudTable
+        data={data}
+        columns={columns}
+        onEdit={actions.openEdit}
+        onDelete={actions.openDelete}
+      />
+
+      <AppModal
+        isOpen={state.isCreateOpen || state.isEditOpen || state.isDeleteOpen}
+        onClose={actions.closeModals}
+        title={state.modalTitle}
+      >
+        {state.isDeleteOpen && state.editingItem?.name ? (
+          <RemoveContent
+            removingItemName={state.editingItem.name}
+            title="Delete place"
+            onSubmit={handleDelete}
+            onCancel={actions.closeModals}
+            submitLabel="Delete"
+          />
+        ) : (
+          <UserForm
+            onCancel={actions.closeModals}
+            onSubmit={handleSubmit}
+            editingItem={state.editingItem}
+            isEdit={state.isEditOpen}
+          />
+        )}
+      </AppModal>
+    </Box>
   );
 };

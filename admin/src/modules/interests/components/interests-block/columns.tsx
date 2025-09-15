@@ -1,25 +1,8 @@
 import Image from "next/image";
 
-import {
-  ColumnConfig,
-  FormField,
-} from "@/shared/components/base/crud-block/types";
+import { ColumnConfig } from "@/shared/components/base/app-table/types";
 
 import { IInterest } from "@/api/crud/interests/types";
-
-export const formFields: FormField<IInterest>[] = [
-  {
-    key: "title",
-    placeholder: "Enter interest title",
-    required: true,
-  },
-  {
-    key: "icon_url",
-    type: "url",
-    required: true,
-    placeholder: "Enter icon URL",
-  },
-];
 
 export const columns: ColumnConfig<IInterest>[] = [
   {
