@@ -21,6 +21,7 @@ interface PlaceFormProps {
   editingItem?: IPlace | null;
   cities: ISelectOption[];
   interests: ISelectOption[];
+  pictures: ISelectOption[];
   isEdit: boolean;
   onCancel: () => void;
 }
@@ -29,6 +30,7 @@ export const PlaceForm = ({
   onSubmit,
   cities,
   interests,
+  pictures,
   editingItem,
   isEdit,
   onCancel,
@@ -66,6 +68,7 @@ export const PlaceForm = ({
         interest_category_ids: editingItem.interestCategories?.map(
           (interest) => interest.id,
         ),
+        picture_ids: editingItem.pictures?.map((picture) => picture.id),
       });
       return;
     }
@@ -123,6 +126,13 @@ export const PlaceForm = ({
           label="Interests"
           multiple
           options={interests}
+        />
+
+        <FormSelect
+          name="picture_ids"
+          label="Picture IDs"
+          multiple
+          options={pictures}
         />
 
         <FormTextField

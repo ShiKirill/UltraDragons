@@ -1,5 +1,6 @@
 import { useCitiesQuery } from "@/modules/cities/hooks/use-query";
 import { useInterestsQuery } from "@/modules/interests/hooks/use-query";
+import { usePicturesQuery } from "@/modules/pictures/hooks/use-query";
 import { usePlacesMutation } from "@/modules/places/hooks/use-mutation";
 import { usePlacesQuery } from "@/modules/places/hooks/use-query";
 import { AppModal } from "@/shared/components/base/app-modal";
@@ -23,6 +24,7 @@ export const PlacesBlock = () => {
   const { data = [] } = usePlacesQuery();
   const { data: interests = [] } = useInterestsQuery();
   const { data: cities = [] } = useCitiesQuery();
+  const { data: pictures = [] } = usePicturesQuery();
   const { state, actions } = useCrudState<IPlace>({ entityName: "place" });
   const citiesOptions = cities.map((city) => ({
     label: city.name,
@@ -32,6 +34,11 @@ export const PlacesBlock = () => {
     label: interest.title,
     value: interest.id,
   }));
+  const picturesOptions =
+    pictures?.map((picture) => ({
+      label: picture.file_name,
+      value: picture.id,
+    })) ?? [];
   const { createPlace, updatePlace, deletePlace } = usePlacesMutation();
 
   const handleDelete = () => {
@@ -78,6 +85,7 @@ export const PlacesBlock = () => {
         ) : (
           <PlaceForm
             cities={citiesOptions}
+            pictures={picturesOptions}
             interests={interestsOptions}
             onCancel={actions.closeModals}
             onSubmit={handleSubmit}

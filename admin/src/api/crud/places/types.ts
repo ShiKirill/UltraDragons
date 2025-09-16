@@ -1,4 +1,4 @@
-import { Nullable } from "@/shared/types/common";
+import { IPicture, Nullable } from "@/shared/types/common";
 
 import { ICity } from "../cities/types";
 import { IInterest } from "../interests/types";
@@ -34,7 +34,7 @@ export interface IPlace {
   end_time?: Nullable<string>;
   interestCategories?: IInterest[];
   // TODO: add picture type
-  pictures?: number[];
+  pictures?: IPicture[];
   is_deleted?: boolean;
 }
 
