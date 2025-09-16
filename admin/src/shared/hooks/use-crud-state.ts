@@ -5,23 +5,30 @@ export interface CrudState<T> {
   isEditOpen: boolean;
   isDeleteOpen: boolean;
   editingItem: T | null;
-  formData: Partial<T>;
+  formData: T;
+  modalTitle: string;
 }
 
-export const useCrudState = <T extends { id?: string | number }>() => {
+export const useCrudState = <T extends { id?: number }>({
+  entityName,
+}: {
+  entityName?: string;
+}) => {
   const [state, setState] = useState<CrudState<T>>({
     isCreateOpen: false,
     isEditOpen: false,
     isDeleteOpen: false,
     editingItem: null,
-    formData: {},
+    formData: {} as T,
+    modalTitle: "",
   });
 
   const openCreate = useCallback(() => {
     setState((prev) => ({
       ...prev,
       isCreateOpen: true,
-      formData: {},
+      formData: {} as T,
+      modalTitle: `Add ${entityName}`,
     }));
   }, []);
 
@@ -31,6 +38,7 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isEditOpen: true,
       editingItem: item,
       formData: { ...item },
+      modalTitle: `Edit ${entityName}`,
     }));
   }, []);
 
@@ -40,6 +48,7 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isDeleteOpen: true,
       editingItem: item,
       formData: { ...item },
+      modalTitle: `Delete ${entityName}`,
     }));
   }, []);
 
@@ -50,18 +59,19 @@ export const useCrudState = <T extends { id?: string | number }>() => {
       isEditOpen: false,
       isDeleteOpen: false,
       editingItem: null,
-      formData: {},
+      formData: {} as T,
+      modalTitle: "",
     }));
   }, []);
 
-  const updateFormData = useCallback((updates: Partial<T>) => {
+  const updateFormData = useCallback((updates: T) => {
     setState((prev) => ({
       ...prev,
       formData: { ...prev.formData, ...updates },
     }));
   }, []);
 
-  const setFormData = useCallback((data: Partial<T>) => {
+  const setFormData = useCallback((data: T) => {
     setState((prev) => ({
       ...prev,
       formData: data,

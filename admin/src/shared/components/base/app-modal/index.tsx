@@ -1,5 +1,11 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, IconButton, Modal, Typography } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from "@mui/material";
 
 import { styles } from "./styles";
 
@@ -17,23 +23,24 @@ export const AppModal = ({
   onClose,
 }: AppModalProps) => {
   return (
-    <Modal
+    <Dialog
       open={isOpen}
       onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
+      maxWidth="sm"
+      fullWidth
+      transitionDuration={{ exit: 0 }}
+      sx={styles.modal}
     >
-      <Box sx={styles.wrapper}>
-        <IconButton sx={styles.closeIcon} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-
+      <DialogTitle sx={{ m: 0, p: "24px" }}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           {title}
         </Typography>
+      </DialogTitle>
 
-        {children}
-      </Box>
-    </Modal>
+      <IconButton sx={styles.closeIcon} onClick={onClose}>
+        <CloseIcon />
+      </IconButton>
+      <DialogContent dividers>{children}</DialogContent>
+    </Dialog>
   );
 };

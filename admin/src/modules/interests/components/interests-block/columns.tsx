@@ -1,25 +1,9 @@
 import Image from "next/image";
 
-import {
-  ColumnConfig,
-  FormField,
-} from "@/shared/components/base/crud-block/types";
+import { ColumnConfig } from "@/shared/components/base/app-table/types";
+import { isValidImageUrl } from "@/shared/utils/isValidUrl";
 
 import { IInterest } from "@/api/crud/interests/types";
-
-export const formFields: FormField<IInterest>[] = [
-  {
-    key: "title",
-    placeholder: "Enter interest title",
-    required: true,
-  },
-  {
-    key: "icon_url",
-    type: "url",
-    required: true,
-    placeholder: "Enter icon URL",
-  },
-];
 
 export const columns: ColumnConfig<IInterest>[] = [
   {
@@ -29,15 +13,20 @@ export const columns: ColumnConfig<IInterest>[] = [
   {
     key: "icon_url",
     label: "Icon",
-    render: (value) =>
-      value ? (
+    render: (value) => {
+      if (!value || !isValidImageUrl(value as string)) {
+        return null;
+      }
+
+      return (
         <Image
-          src={value}
+          src={value as string}
           alt="icon"
           width={28}
           height={28}
           style={{ objectFit: "cover", borderRadius: "50%" }}
         />
-      ) : null,
+      );
+    },
   },
 ];

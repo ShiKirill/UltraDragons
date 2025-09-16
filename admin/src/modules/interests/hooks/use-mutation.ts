@@ -16,7 +16,7 @@ export const useInterestsMutation = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async (id: number) => {
       return interestsApi.deleteInterest(id);
     },
     onSuccess: () => {

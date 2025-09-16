@@ -1,5 +1,5 @@
-import { useInterestsMutation } from "@/modules/interests/hooks/use-mutation";
-import { useInterestsQuery } from "@/modules/interests/hooks/use-query";
+import { useUsersMutation } from "@/modules/users/hooks/use-mutation";
+import { useUsersQuery } from "@/modules/users/hooks/use-query";
 import { AppModal } from "@/shared/components/base/app-modal";
 import { RemoveContent } from "@/shared/components/base/app-modal/remove-content";
 import { CrudTable } from "@/shared/components/base/app-table";
@@ -7,55 +7,64 @@ import { HeaderBlock } from "@/shared/components/base/header-block";
 import { useCrudState } from "@/shared/hooks/use-crud-state";
 import { Box } from "@mui/material";
 
-import { IInterest, IInterestCreateDto } from "@/api/crud/interests/types";
+import { IUser, IUserCreateDto, IUserUpdateDto } from "@/api/crud/users/types";
 
-import { InterestForm } from "../form";
+import { UserForm } from "../form";
 import { columns } from "./columns";
 import { styles } from "./styles";
 
-export const InterestsBlock = () => {
-  const { data = [] } = useInterestsQuery();
-  const { createInterest, deleteInterest } = useInterestsMutation();
-  const { state, actions } = useCrudState<IInterest>({
-    entityName: "interest",
-  });
+export const UsersBlock = () => {
+  const { data = [] } = useUsersQuery();
+  const { createUser, updateUser, deleteUser } = useUsersMutation();
+  const { state, actions } = useCrudState<IUser>({ entityName: "user" });
+
+  const handleSubmit = (data: IUserCreateDto | IUserUpdateDto) => {
+    if ("id" in data) {
+      updateUser(data);
+    } else {
+      createUser(data);
+    }
+  };
 
   const handleDelete = () => {
     if (!state.editingItem?.id) return;
-    deleteInterest(state.editingItem?.id);
+    deleteUser(state.editingItem?.id);
     actions.closeModals();
-  };
-
-  const handleSubmit = (data: IInterestCreateDto) => {
-    createInterest(data);
   };
 
   return (
     <Box sx={styles.wrapper} component="section">
       <HeaderBlock
-        title="Interests"
-        actions={[{ label: "Add interest", onClick: actions.openCreate }]}
+        title="Users"
+        actions={[{ label: "Add user", onClick: actions.openCreate }]}
       />
 
-      <CrudTable data={data} columns={columns} onDelete={actions.openDelete} />
+      <CrudTable
+        data={data}
+        columns={columns}
+        onEdit={actions.openEdit}
+        onDelete={actions.openDelete}
+      />
 
       <AppModal
         isOpen={state.isCreateOpen || state.isEditOpen || state.isDeleteOpen}
         onClose={actions.closeModals}
         title={state.modalTitle}
       >
-        {state.isDeleteOpen && state.editingItem?.title ? (
+        {state.isDeleteOpen && state.editingItem?.name ? (
           <RemoveContent
-            removingItemName={state.editingItem.title}
+            removingItemName={state.editingItem.name}
             title="Delete place"
             onSubmit={handleDelete}
             onCancel={actions.closeModals}
             submitLabel="Delete"
           />
         ) : (
-          <InterestForm
+          <UserForm
             onCancel={actions.closeModals}
             onSubmit={handleSubmit}
+            editingItem={state.editingItem}
+            isEdit={state.isEditOpen}
           />
         )}
       </AppModal>

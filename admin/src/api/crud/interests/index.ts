@@ -1,6 +1,6 @@
 import { ApiClient, BASE_URL } from "@/api/client";
 
-import { IInterest } from "./types";
+import { IInterest, IInterestCreateDto } from "./types";
 
 export const INTERESTS_QUERY_KEY = "interests";
 
@@ -13,11 +13,11 @@ class InterestsApi extends ApiClient {
     return this.get<IInterest[]>("");
   }
 
-  async createInterest(data: Omit<IInterest, "id">): Promise<IInterest> {
+  async createInterest(data: IInterestCreateDto): Promise<IInterest> {
     return this.post<IInterest>("", data);
   }
 
-  async deleteInterest(id: string): Promise<void> {
+  async deleteInterest(id: number): Promise<void> {
     return this.delete<void>(`/${id}`);
   }
 }
