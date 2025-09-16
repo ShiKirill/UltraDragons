@@ -13,7 +13,7 @@ class UsersApi extends ApiClient {
     return this.get<IUser[]>("");
   }
 
-  async getUser(id: string): Promise<IUser> {
+  async getUser(id: number): Promise<IUser> {
     return this.get<IUser>(`/${id}`);
   }
 
@@ -21,11 +21,11 @@ class UsersApi extends ApiClient {
     return this.post<IUser>("", data);
   }
 
-  async updateUser(id: string, data: IUserUpdateDto): Promise<IUser> {
+  async updateUser(id: number, data: IUserUpdateDto): Promise<IUser> {
     return this.put<IUser>(`/${id}`, data);
   }
 
-  async deleteUser(userId: string): Promise<void> {
+  async deleteUser(userId: number): Promise<void> {
     return this.delete<void>(`/${userId}`);
   }
 }

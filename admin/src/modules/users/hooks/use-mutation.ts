@@ -25,7 +25,7 @@ export const useUsersMutation = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async (id: number) => {
       return usersApi.deleteUser(id);
     },
     onSuccess: () => {

@@ -1,6 +1,6 @@
 import { ColumnConfig } from "@/shared/components/base/app-table/types";
 import { ROLES_MAP } from "@/shared/constants";
-import { Role } from "@/shared/types/app";
+import { Role } from "@/shared/types/common";
 import { Typography } from "@mui/material";
 
 import { IUser } from "@/api/crud/users/types";

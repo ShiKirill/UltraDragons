@@ -9,7 +9,7 @@ export interface CrudState<T> {
   modalTitle: string;
 }
 
-export const useCrudState = <T extends { id?: string | number }>({
+export const useCrudState = <T extends { id?: number }>({
   entityName,
 }: {
   entityName?: string;

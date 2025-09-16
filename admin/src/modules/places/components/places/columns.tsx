@@ -1,8 +1,9 @@
 import { ColumnConfig } from "@/shared/components/base/app-table/types";
+import { Typography } from "@mui/material";
 
 import { IPlace } from "@/api/crud/places/types";
 
-export const columns: ColumnConfig<IPlace>[] = [
+export const columns: ColumnConfig<IPlace, keyof IPlace>[] = [
   {
     key: "id",
     label: "ID",
@@ -48,16 +49,24 @@ export const columns: ColumnConfig<IPlace>[] = [
     label: "Longitude",
   },
   {
-    key: "interest_category_ids",
-    label: "Interest Category IDs",
+    key: "interestCategories",
+    label: "Interests",
+    render: (value) => {
+      const interests = value as IPlace["interestCategories"];
+      return <Typography>{interests?.map((interest) => interest.title).join(", ")}</Typography>;
+    },
   },
   {
-    key: "picture_ids",
+    key: "pictures",
     label: "Picture IDs",
   },
   {
-    key: "city_id",
-    label: "City ID",
+    key: "city",
+    label: "City",
+    render: (value) => {
+      const city = value as IPlace["city"];
+      return <Typography>{city?.name || "N/A"}</Typography>;
+    },
   },
   {
     key: "is_deleted",

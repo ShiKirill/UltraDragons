@@ -25,7 +25,7 @@ export const usePlacesMutation = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async (id: number) => {
       return placesApi.deletePlace(id);
     },
     onSuccess: () => {

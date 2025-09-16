@@ -1,5 +1,5 @@
 export interface IInterest {
-  id: string;
+  id: number;
   title: string;
   icon_url: string;
 }

@@ -18,7 +18,7 @@ interface CityFormProps {
 export const CityForm = ({ onSubmit, onCancel }: CityFormProps) => {
   const form = useForm<CityCreateSchema>({
     resolver: zodResolver(cityCreateSchema),
-    mode: "onChange",
+    mode: "onSubmit",
     defaultValues,
   });
 
@@ -98,7 +98,7 @@ export const CityForm = ({ onSubmit, onCancel }: CityFormProps) => {
           <Button
             type="submit"
             variant="contained"
-            disabled={!form.formState.isValid || form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "Submitting..." : "Submit"}
           </Button>

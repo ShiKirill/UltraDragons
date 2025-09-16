@@ -16,7 +16,7 @@ export const useCitiesMutation = () => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: string) => {
+    mutationFn: async (id: number) => {
       return citiesApi.deleteCity(id);
     },
     onSuccess: () => {

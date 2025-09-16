@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import type { RegisterOptions } from "react-hook-form";
 
+import { ISelectOption } from "@/shared/types/common";
 import {
   Box,
   FormControl,
@@ -18,7 +18,7 @@ export interface IFormSelectProps
   extends Omit<SelectProps, "error" | "onChange"> {
   name: string;
   label?: string;
-  options: { label: string; value: string | number }[];
+  options: ISelectOption[];
 }
 
 export const FormSelect = (

@@ -5,7 +5,11 @@ import { FormTextField } from "@/shared/components/form/text-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button } from "@mui/material";
 
-import { InterestsCreateSchema, interestCreateSchema } from "./schema";
+import {
+  InterestsCreateSchema,
+  defaultValues,
+  interestCreateSchema,
+} from "./schema";
 import { styles } from "./styles";
 
 interface PlaceFormProps {
@@ -16,11 +20,8 @@ interface PlaceFormProps {
 export const InterestForm = ({ onSubmit, onCancel }: PlaceFormProps) => {
   const form = useForm<InterestsCreateSchema>({
     resolver: zodResolver(interestCreateSchema),
-    mode: "onChange",
-    defaultValues: {
-      title: "",
-      icon_url: "",
-    },
+    mode: "onSubmit",
+    defaultValues,
   });
 
   const handleSubmit = async (data: InterestsCreateSchema) => {
@@ -57,7 +58,7 @@ export const InterestForm = ({ onSubmit, onCancel }: PlaceFormProps) => {
           <Button
             type="submit"
             variant="contained"
-            disabled={!form.formState.isValid || form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "Submitting..." : "Submit"}
           </Button>

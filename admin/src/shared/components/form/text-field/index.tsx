@@ -29,7 +29,7 @@ export const FormTextField = (
       name={name}
       rules={rules}
       render={({
-        field: { ref, ...fieldWithoutRef },
+        field: { ref, value, onChange, ...fieldWithoutRef },
         fieldState: { error },
       }) => {
         return (
@@ -42,6 +42,18 @@ export const FormTextField = (
               error={!!error?.message}
               focused={isFocused || Boolean(dirtyFields[name])}
               type={type}
+              value={value}
+              onChange={(evt) => {
+                const inputValue = evt.target.value;
+
+                if (type === "number") {
+                  const numValue =
+                    inputValue === "" ? undefined : Number(inputValue);
+                  onChange(numValue && isNaN(numValue) ? inputValue : numValue);
+                } else {
+                  onChange(inputValue);
+                }
+              }}
               onFocus={(evt) => {
                 setIsFocused(true);
                 inputProps.onFocus?.(evt);

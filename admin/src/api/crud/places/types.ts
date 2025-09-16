@@ -1,21 +1,41 @@
-export interface IPlace {
-  id: string;
+import { Nullable } from "@/shared/types/common";
+
+import { ICity } from "../cities/types";
+import { IInterest } from "../interests/types";
+
+export interface IPlaceCreateDto {
   name: string;
   description: string;
   address: string;
+  lat: number;
+  lon: number;
+  city_id: number;
   website?: string;
   tg?: string;
   zalo?: string;
   start_time?: string;
   end_time?: string;
-  lat: string;
-  lon: string;
   interest_category_ids?: number[];
   picture_ids?: number[];
-  city_id: string;
+}
+
+export interface IPlace {
+  id: number;
+  name: string;
+  description: string;
+  address: string;
+  lat: number;
+  lon: number;
+  city: ICity;
+  website?: Nullable<string>;
+  tg?: Nullable<string>;
+  zalo?: Nullable<string>;
+  start_time?: Nullable<string>;
+  end_time?: Nullable<string>;
+  interestCategories?: IInterest[];
+  // TODO: add picture type
+  pictures?: number[];
   is_deleted?: boolean;
 }
 
-export type IPlaceCreateDto = Omit<IPlace, "id | is_deleted">;
-
-export type IPlaceUpdateDto = Partial<IPlace> & { id: string };
+export type IPlaceUpdateDto = Partial<IPlace> & { id: number };

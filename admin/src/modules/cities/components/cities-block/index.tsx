@@ -31,8 +31,8 @@ export const CitiesBlock = () => {
   return (
     <Box sx={styles.wrapper} component="section">
       <HeaderBlock
-        title="Places"
-        actions={[{ label: "Add place", onClick: actions.openCreate }]}
+        title="Cities"
+        actions={[{ label: "Add city", onClick: actions.openCreate }]}
       />
 
       <CrudTable

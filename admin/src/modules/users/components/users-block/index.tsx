@@ -36,7 +36,7 @@ export const UsersBlock = () => {
     <Box sx={styles.wrapper} component="section">
       <HeaderBlock
         title="Users"
-        actions={[{ label: "Add place", onClick: actions.openCreate }]}
+        actions={[{ label: "Add user", onClick: actions.openCreate }]}
       />
 
       <CrudTable

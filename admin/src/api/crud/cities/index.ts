@@ -13,7 +13,7 @@ class CitiesApi extends ApiClient {
     return this.get<ICity[]>("");
   }
 
-  async getCity(id: string): Promise<ICity> {
+  async getCity(id: number): Promise<ICity> {
     return this.get<ICity>(`/${id}`);
   }
 
@@ -21,7 +21,7 @@ class CitiesApi extends ApiClient {
     return this.post<ICity>("", data);
   }
 
-  async deleteCity(cityId: string): Promise<void> {
+  async deleteCity(cityId: number): Promise<void> {
     return this.delete<void>(`/${cityId}`);
   }
 }

@@ -9,7 +9,7 @@ import { Box, Button } from "@mui/material";
 
 import { IUser, IUserCreateDto, IUserUpdateDto } from "@/api/crud/users/types";
 
-import { UserCreateSchema, userCreateSchema } from "./schema";
+import { UserCreateSchema, defaultValues, userCreateSchema } from "./schema";
 import { styles } from "./styles";
 
 interface UserFormProps {
@@ -27,10 +27,8 @@ export const UserForm = ({
 }: UserFormProps) => {
   const form = useForm<UserCreateSchema>({
     resolver: zodResolver(userCreateSchema),
-    mode: "onChange",
-    defaultValues: {
-      name: editingItem?.name || "",
-    },
+    mode: "onSubmit",
+    defaultValues,
   });
 
   const handleSubmit = async (data: UserCreateSchema) => {
@@ -85,7 +83,7 @@ export const UserForm = ({
           <Button
             type="submit"
             variant="contained"
-            disabled={!form.formState.isValid || form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "Submitting..." : "Submit"}
           </Button>

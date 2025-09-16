@@ -12,15 +12,15 @@ import {
 
 import { ColumnConfig } from "./types";
 
-interface CrudTableProps<T extends { id?: string | number }> {
+interface CrudTableProps<T extends { id?: number }> {
   data: T[];
-  columns?: ColumnConfig<T>[];
+  columns?: ColumnConfig<T, keyof T>[];
   onEdit?: (item: T) => void;
   onDelete?: (item: T) => void;
   showActions?: boolean;
 }
 
-const extractColumns = <T extends object>(data: T[]): ColumnConfig<T>[] => {
+const extractColumns = <T extends object>(data: T[]): ColumnConfig<T, keyof T>[] => {
   if (!data.length) return [];
 
   return Object.keys(data[0]).map((key) => ({
@@ -29,7 +29,7 @@ const extractColumns = <T extends object>(data: T[]): ColumnConfig<T>[] => {
   }));
 };
 
-export const CrudTable = <T extends { id?: string | number }>({
+export const CrudTable = <T extends { id?: number }>({
   data,
   columns,
   onEdit,
@@ -41,7 +41,7 @@ export const CrudTable = <T extends { id?: string | number }>({
     ? [...autoColumns, { key: "actions" as keyof T, label: "" }]
     : autoColumns;
 
-  const renderCell = (column: ColumnConfig<T>, row: T) => {
+  const renderCell = (column: ColumnConfig<T, keyof T>, row: T) => {
     const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
       onEdit?.(row);

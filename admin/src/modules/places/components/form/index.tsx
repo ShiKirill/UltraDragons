@@ -1,8 +1,11 @@
 import { CSSProperties, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
+import { FormSelect } from "@/shared/components/form/select";
 import { FormTextField } from "@/shared/components/form/text-field";
+import { ISelectOption } from "@/shared/types/common";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button } from "@mui/material";
 
 import {
   IPlace,
@@ -10,29 +13,30 @@ import {
   IPlaceUpdateDto,
 } from "@/api/crud/places/types";
 
-import { PlaceCreateSchema, placeCreateSchema } from "./schema";
+import { PlaceCreateSchema, defaultValues, placeCreateSchema } from "./schema";
 import { styles } from "./styles";
-import { Box, Button } from "@mui/material";
 
 interface PlaceFormProps {
   onSubmit: (data: IPlaceCreateDto | IPlaceUpdateDto) => void;
   editingItem?: IPlace | null;
+  cities: ISelectOption[];
+  interests: ISelectOption[];
   isEdit: boolean;
   onCancel: () => void;
 }
 
 export const PlaceForm = ({
   onSubmit,
+  cities,
+  interests,
   editingItem,
   isEdit,
   onCancel,
 }: PlaceFormProps) => {
   const form = useForm<PlaceCreateSchema>({
     resolver: zodResolver(placeCreateSchema),
-    mode: "onChange",
-    defaultValues: {
-      name: editingItem?.name || "",
-    },
+    mode: "onSubmit",
+    defaultValues,
   });
 
   const handleSubmit = async (data: PlaceCreateSchema) => {
@@ -49,6 +53,19 @@ export const PlaceForm = ({
     if (isEdit && editingItem) {
       form.reset({
         name: editingItem.name,
+        description: editingItem.description,
+        address: editingItem.address,
+        lat: editingItem.lat,
+        lon: editingItem.lon,
+        city_id: editingItem.city.id,
+        website: editingItem.website,
+        tg: editingItem.tg,
+        zalo: editingItem.zalo,
+        start_time: editingItem.start_time,
+        end_time: editingItem.end_time,
+        interest_category_ids: editingItem.interestCategories?.map(
+          (interest) => interest.id,
+        ),
       });
       return;
     }
@@ -88,19 +105,24 @@ export const PlaceForm = ({
         <FormTextField
           name="lat"
           label="Latitude"
+          type="number"
           placeholder="Enter place latitude"
         />
 
         <FormTextField
           name="lon"
           label="Longitude"
+          type="number"
           placeholder="Enter place longitude"
         />
 
-        <FormTextField
-          name="city_id"
-          label="City"
-          placeholder="Enter place city"
+        <FormSelect name="city_id" label="City" options={cities} />
+
+        <FormSelect
+          name="interest_category_ids"
+          label="Interests"
+          multiple
+          options={interests}
         />
 
         <FormTextField
@@ -141,7 +163,7 @@ export const PlaceForm = ({
           <Button
             type="submit"
             variant="contained"
-            disabled={!form.formState.isValid || form.formState.isSubmitting}
+            disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "Submitting..." : "Submit"}
           </Button>

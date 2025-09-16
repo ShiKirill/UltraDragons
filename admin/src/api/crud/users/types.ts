@@ -1,5 +1,5 @@
 export interface IUser {
-  id: string;
+  id: number;
   name: string;
   email: string;
   email_confirmed?: boolean;
@@ -11,4 +11,4 @@ export interface IUser {
 
 export type IUserCreateDto = Omit<IUser, "id">;
 
-export type IUserUpdateDto = Partial<IUser> & { id: string };
+export type IUserUpdateDto = Partial<IUser> & { id: number };

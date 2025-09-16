@@ -17,7 +17,7 @@ class InterestsApi extends ApiClient {
     return this.post<IInterest>("", data);
   }
 
-  async deleteInterest(id: string): Promise<void> {
+  async deleteInterest(id: number): Promise<void> {
     return this.delete<void>(`/${id}`);
   }
 }

@@ -1,4 +1,4 @@
-import { Role } from "./types/app";
+import { Role } from "./types/common";
 
 export const ROLES = [
   { label: "User", value: Role.User },

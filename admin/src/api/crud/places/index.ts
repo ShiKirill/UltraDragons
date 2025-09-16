@@ -17,11 +17,11 @@ class PlacesApi extends ApiClient {
     return this.post<IPlace>("", data);
   }
 
-  async updatePlace(id: string, data: IPlaceUpdateDto): Promise<IPlace> {
+  async updatePlace(id: number, data: IPlaceUpdateDto): Promise<IPlace> {
     return this.put<IPlace>(`/${id}`, data);
   }
 
-  async deletePlace(id: string): Promise<void> {
+  async deletePlace(id: number): Promise<void> {
     return this.delete<void>(`/${id}`);
   }
 }

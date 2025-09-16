@@ -33,8 +33,8 @@ export const InterestsBlock = () => {
   return (
     <Box sx={styles.wrapper} component="section">
       <HeaderBlock
-        title="Places"
-        actions={[{ label: "Add place", onClick: actions.openCreate }]}
+        title="Interests"
+        actions={[{ label: "Add interest", onClick: actions.openCreate }]}
       />
 
       <CrudTable data={data} columns={columns} onDelete={actions.openDelete} />

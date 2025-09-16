@@ -1,3 +1,5 @@
+import { useCitiesQuery } from "@/modules/cities/hooks/use-query";
+import { useInterestsQuery } from "@/modules/interests/hooks/use-query";
 import { usePlacesMutation } from "@/modules/places/hooks/use-mutation";
 import { usePlacesQuery } from "@/modules/places/hooks/use-query";
 import { AppModal } from "@/shared/components/base/app-modal";
@@ -19,8 +21,18 @@ import { styles } from "./styles";
 
 export const PlacesBlock = () => {
   const { data = [] } = usePlacesQuery();
-  const { createPlace, updatePlace, deletePlace } = usePlacesMutation();
+  const { data: interests = [] } = useInterestsQuery();
+  const { data: cities = [] } = useCitiesQuery();
   const { state, actions } = useCrudState<IPlace>({ entityName: "place" });
+  const citiesOptions = cities.map((city) => ({
+    label: city.name,
+    value: city.id,
+  }));
+  const interestsOptions = interests.map((interest) => ({
+    label: interest.title,
+    value: interest.id,
+  }));
+  const { createPlace, updatePlace, deletePlace } = usePlacesMutation();
 
   const handleDelete = () => {
     if (!state.editingItem?.id) return;
@@ -65,6 +77,8 @@ export const PlacesBlock = () => {
           />
         ) : (
           <PlaceForm
+            cities={citiesOptions}
+            interests={interestsOptions}
             onCancel={actions.closeModals}
             onSubmit={handleSubmit}
             editingItem={state.editingItem}
