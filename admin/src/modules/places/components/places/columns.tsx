@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { ColumnConfig } from "@/shared/components/base/app-table/types";
 import { Typography } from "@mui/material";
 
@@ -53,12 +55,35 @@ export const columns: ColumnConfig<IPlace, keyof IPlace>[] = [
     label: "Interests",
     render: (value) => {
       const interests = value as IPlace["interestCategories"];
-      return <Typography>{interests?.map((interest) => interest.title).join(", ")}</Typography>;
+      return (
+        <Typography>
+          {interests?.map((interest) => interest.title).join(", ")}
+        </Typography>
+      );
     },
   },
   {
     key: "pictures",
     label: "Picture IDs",
+    render: (value) => {
+      const pictures = value as IPlace["pictures"];
+
+      return (
+        <div>
+          {pictures?.map((picture) => {
+            return (
+              <Image
+                key={picture.id}
+                src={picture.url}
+                alt={picture.file_name}
+                width={28}
+                height={28}
+              />
+            );
+          })}
+        </div>
+      );
+    },
   },
   {
     key: "city",

@@ -9,4 +9,11 @@ export interface ISelectOption {
   disabled?: boolean;
 }
 
+export interface IPicture {
+  id: number;
+  url: string;
+  file_name: string;
+  file_type: string;
+}
+
 export type Nullable<T> = T | null;
