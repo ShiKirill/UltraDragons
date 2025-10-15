@@ -3,6 +3,7 @@
 import { type PropsWithChildren, useState } from "react";
 
 import { AuthProvider } from "@/modules/auth/context";
+import { LocaleProvider } from "@/shared/providers/locale-provider";
 import { theme } from "@/shared/styles/theme";
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
@@ -14,7 +15,9 @@ export const ClientProviders = ({ children }: PropsWithChildren) => {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>{children}</AuthProvider>
+        <LocaleProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </LocaleProvider>
       </QueryClientProvider>
       <CssBaseline />
     </ThemeProvider>
