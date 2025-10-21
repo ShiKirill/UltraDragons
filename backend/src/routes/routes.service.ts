@@ -9,9 +9,8 @@ import { Route } from './entities/route.entity';
 import { RoutePlace } from './entities/route-place.entity';
 import { SelectionSessionsService } from 'src/selection-sessions/selection-sessions.service';
 import { UsersService } from 'src/users/users.service';
-import { PlacesService } from 'src/places/places.service';
+import { PlaceSelectionsService } from 'src/place-selections/place-selections.service';
 import { CreateRouteDto } from './dto/create-route.dto';
-import { UpdateRouteDto } from './dto/update-route.dto';
 
 @Injectable()
 export class RoutesService {
@@ -22,7 +21,7 @@ export class RoutesService {
         private readonly routePlaceRepository: Repository<RoutePlace>,
         private readonly sessionsService: SelectionSessionsService,
         private readonly userService: UsersService,
-        private readonly placeService: PlacesService,
+        private readonly placeSelectionsService: PlaceSelectionsService,
     ) {}
 
     async findAll(): Promise<Route[]> {
@@ -44,42 +43,39 @@ export class RoutesService {
     async create(dto: CreateRouteDto): Promise<Route> {
         const user = await this.userService.findOne(dto.user_id);
         if (!user) throw new NotFoundException('Пользователь не найден');
+
         const session = await this.sessionsService.findOne(dto.session_id);
         if (!session) throw new NotFoundException('Сессия не найдена');
 
-        let routePlaces: RoutePlace[] = [];
-        if (dto.route_places?.length) {
-            for (let rp of dto.route_places) {
-                const place = await this.placeService.findOne(rp.place_id);
-                if (!place)
-                    throw new NotFoundException(
-                        `Место id=${rp.place_id} не найдено`,
-                    );
-                routePlaces.push(
-                    this.routePlaceRepository.create({
-                        place,
-                        status: rp.status,
-                        visitOrder: rp.visit_order,
-                    }),
-                );
-            }
+        if (session.userId !== dto.user_id) {
+            throw new BadRequestException('Сессия не принадлежит пользователю');
         }
+
+        // Получаем все выборы мест из сессии
+        const selections = await this.placeSelectionsService.findBySessionId(
+            dto.session_id,
+        );
+
+        const selected = selections.filter((s) => s.status === 'selected');
+        if (!selected.length) {
+            throw new BadRequestException('Нет выбранных мест для маршрута');
+        }
+
+        // Преобразуем PlaceSelection → RoutePlace
+        const routePlaces = selected.map((s, i) =>
+            this.routePlaceRepository.create({
+                place: s.place,
+                status: s.status,
+                visitOrder: s.sequence ?? i + 1,
+            }),
+        );
 
         const route = this.routeRepository.create({
             user,
             session,
-            created_at: dto.created_at,
-            routePlaces: routePlaces.length
-                ? await this.routePlaceRepository.save(routePlaces)
-                : [],
+            routePlaces,
         });
 
-        return this.routeRepository.save(route);
-    }
-
-    async update(id: number, dto: UpdateRouteDto): Promise<Route> {
-        const route = await this.findOne(id);
-        Object.assign(route, dto);
         return this.routeRepository.save(route);
     }
 

@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { InterestCategoriesService } from './interest-categories.service';
 import { CreateInterestCategoryDto } from './dto/create-interest-category.dto';
 import { InterestCategory } from './entities/interest-category.entity';
@@ -49,5 +49,17 @@ export class InterestCategoriesController {
     @ApiResponse({ status: 200, description: 'Категория удалена' })
     remove(@Param('id') id: string) {
         return this.categoriesService.remove(+id);
+    }
+
+    @Post('bulk')
+    @ApiOperation({ summary: 'Массовое создание категорий интересов' })
+    @ApiResponse({ status: 201 })
+    @ApiBody({
+        description: 'Список городов для массового создания',
+        type: CreateInterestCategoryDto,
+        isArray: true,
+    })
+    bulkCreate(@Body() categories: CreateInterestCategoryDto[]) {
+        return this.categoriesService.bulkCreate(categories);
     }
 }

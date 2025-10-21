@@ -4,10 +4,10 @@ import { RoutesService } from './routes.service';
 import { RoutesController } from './routes.controller';
 import { Route } from './entities/route.entity';
 import { RoutePlace } from './entities/route-place.entity';
-import { CitiesModule } from '../cities/cities.module';
 import { UsersModule } from '../users/users.module';
 import { PlacesModule } from '../places/places.module';
 import { SelectionSessionsModule } from 'src/selection-sessions/selection-sessions.module';
+import { PlaceSelectionsModule } from 'src/place-selections/place-selections.module';
 
 @Module({
     imports: [
@@ -15,6 +15,7 @@ import { SelectionSessionsModule } from 'src/selection-sessions/selection-sessio
         SelectionSessionsModule,
         UsersModule,
         PlacesModule,
+        PlaceSelectionsModule,
     ],
     controllers: [RoutesController],
     providers: [RoutesService],

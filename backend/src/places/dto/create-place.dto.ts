@@ -8,6 +8,7 @@ import {
     IsLatitude,
     IsLongitude,
     ArrayMinSize,
+    ArrayNotEmpty,
 } from 'class-validator';
 
 export class CreatePlaceDto {
@@ -88,6 +89,9 @@ export class CreatePlaceDto {
     @IsArray()
     @ArrayMinSize(1)
     @IsNumber({}, { each: true })
+    @ArrayNotEmpty({
+        message: 'Нужно указать хотя бы одну категорию интересов',
+    })
     interest_category_ids: number[];
 
     @ApiProperty({

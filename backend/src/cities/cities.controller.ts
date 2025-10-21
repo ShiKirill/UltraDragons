@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { CitiesService } from './cities.service';
 import { CreateCityDto } from './dto/create-city.dto';
 import { City } from './entities/city.entity';
@@ -49,5 +49,17 @@ export class CitiesController {
     @ApiResponse({ status: 404, description: 'Город не найден' })
     remove(@Param('id') id: string) {
         return this.citiesService.remove(+id);
+    }
+
+    @Post('bulk')
+    @ApiOperation({ summary: 'Массовое создание городов (batch insert)' })
+    @ApiResponse({ status: 201, type: [City] })
+    @ApiBody({
+        description: 'Список городов для массового создания',
+        type: CreateCityDto,
+        isArray: true,
+    })
+    bulkCreate(@Body() cities: CreateCityDto[]) {
+        return this.citiesService.bulkCreate(cities);
     }
 }

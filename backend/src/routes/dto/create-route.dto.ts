@@ -1,24 +1,12 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsArray, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-
-class RoutePlaceDto {
-    @ApiProperty() @IsInt() place_id: number;
-    @ApiProperty({ enum: ['selected', 'skipped'] }) status:
-        | 'selected'
-        | 'skipped';
-    @ApiProperty() @IsInt() visit_order: number;
-}
+import { ApiProperty } from '@nestjs/swagger';
+import { IsInt } from 'class-validator';
 
 export class CreateRouteDto {
-    @ApiProperty() @IsInt() user_id: number;
-    @ApiProperty() @IsInt() session_id: number;
-    @ApiPropertyOptional() @IsOptional() created_at?: Date;
+    @ApiProperty({ example: 1 })
+    @IsInt()
+    user_id: number;
 
-    @ApiPropertyOptional({ type: [RoutePlaceDto] })
-    @IsOptional()
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => RoutePlaceDto)
-    route_places?: RoutePlaceDto[];
+    @ApiProperty({ example: 42 })
+    @IsInt()
+    session_id: number;
 }

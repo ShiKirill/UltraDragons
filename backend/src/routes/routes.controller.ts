@@ -1,50 +1,40 @@
-import {
-    Controller,
-    Get,
-    Post,
-    Body,
-    Param,
-    Put,
-    Delete,
-} from '@nestjs/common';
-import { CreateRouteDto } from './dto/create-route.dto';
-import { UpdateRouteDto } from './dto/update-route.dto';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { RoutesService } from './routes.service';
+import { CreateRouteDto } from './dto/create-route.dto';
+import { Route } from './entities/route.entity';
 
-@ApiTags('Маршруты (пока не трогал, это на потом)')
+@ApiTags('Маршруты')
 @Controller('routes')
 export class RoutesController {
     constructor(private readonly routesService: RoutesService) {}
 
     @Get()
     @ApiOperation({ summary: 'Получить список маршрутов' })
+    @ApiResponse({ status: 200, type: [Route] })
     findAll() {
         return this.routesService.findAll();
     }
 
     @Get(':id')
-    @ApiOperation({ summary: 'Получить маршрут по id' })
+    @ApiOperation({ summary: 'Получить маршрут по ID' })
+    @ApiResponse({ status: 200, type: Route })
     findOne(@Param('id') id: string) {
         return this.routesService.findOne(Number(id));
     }
 
     @Post()
-    @ApiOperation({ summary: 'Создать маршрут' })
+    @ApiOperation({
+        summary: 'Создать маршрут на основе выбранных мест из сессии выбора',
+    })
+    @ApiResponse({ status: 201, type: Route })
     create(@Body() dto: CreateRouteDto) {
         return this.routesService.create(dto);
     }
 
-    @Put(':id')
-    @ApiOperation({
-        summary: 'Обновить маршрут (например, изменить состав мест)',
-    })
-    update(@Param('id') id: string, @Body() dto: UpdateRouteDto) {
-        return this.routesService.update(Number(id), dto);
-    }
-
     @Delete(':id')
     @ApiOperation({ summary: 'Удалить маршрут' })
+    @ApiResponse({ status: 200, description: 'Маршрут успешно удалён' })
     remove(@Param('id') id: string) {
         return this.routesService.remove(Number(id));
     }

@@ -2,6 +2,8 @@ import {
     Injectable,
     NotFoundException,
     BadRequestException,
+    forwardRef,
+    Inject,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -18,23 +20,32 @@ export class PlaceSelectionsService {
         @InjectRepository(PlaceSelection)
         private readonly selectionsRepository: Repository<PlaceSelection>,
         private readonly sessionsService: SelectionSessionsService,
+        @Inject(forwardRef(() => PlacesService))
         private readonly placesService: PlacesService,
     ) {}
 
     async create(dto: CreatePlaceSelectionDto): Promise<PlaceSelection> {
         const session = await this.sessionsService.findOne(dto.session_id);
-        if (!session) throw new BadRequestException('Сессия не найдена');
         if (session.is_completed) {
             throw new BadRequestException(
                 'Сессия уже завершена, нельзя добавить новые выборы',
             );
         }
+
         const place = await this.placesService.findOne(dto.place_id);
-        if (!place) throw new BadRequestException('Место не найдено');
+
+        const existing = await this.selectionsRepository.findOne({
+            where: { sessionId: dto.session_id, placeId: dto.place_id },
+        });
+        if (existing) {
+            throw new BadRequestException(
+                'Место уже было выбрано или пропущено в этой сессии',
+            );
+        }
 
         const selection = this.selectionsRepository.create({
-            session: { id: dto.session_id },
-            place: { id: dto.place_id },
+            session,
+            place,
             status: dto.status,
             sequence: dto.sequence,
         });
@@ -59,7 +70,7 @@ export class PlaceSelectionsService {
                 'place.city',
                 'place.interestCategories',
             ],
-            order: { sequence: 'ASC' },
+            order: { id: 'ASC' },
         });
     }
 
@@ -82,18 +93,25 @@ export class PlaceSelectionsService {
     ): Promise<PlaceSelection> {
         const selection = await this.findOne(id);
 
-        if (dto.status !== undefined) {
-            selection.status = dto.status;
-        }
-        if (dto.sequence !== undefined) {
-            selection.sequence = dto.sequence;
-        }
+        if (dto.status) selection.status = dto.status;
+        if (dto.sequence !== undefined) selection.sequence = dto.sequence;
 
         return this.selectionsRepository.save(selection);
     }
 
-    async remove(id: number): Promise<void> {
+    async remove(id: number): Promise<{ message: string }> {
         const selection = await this.findOne(id);
         await this.selectionsRepository.remove(selection);
+        return {
+            message: `Place selection with ID ${id} deleted successfully`,
+        };
+    }
+
+    async findViewedPlaceIds(sessionId: number): Promise<number[]> {
+        const selections = await this.selectionsRepository.find({
+            where: { sessionId },
+            select: ['placeId'],
+        });
+        return selections.map((s) => s.placeId);
     }
 }

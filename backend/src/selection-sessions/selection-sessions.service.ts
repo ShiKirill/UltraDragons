@@ -10,6 +10,7 @@ import { CreateSelectionSessionDto } from './dto/create-selection-session.dto';
 import { UpdateSelectionSessionDto } from './dto/update-selection-session.dto';
 import { SelectionSession } from './entities/selection-sessions.entity';
 import { UsersService } from 'src/users/users.service';
+import { CitiesService } from 'src/cities/cities.service';
 
 @Injectable()
 export class SelectionSessionsService {
@@ -17,6 +18,7 @@ export class SelectionSessionsService {
         @InjectRepository(SelectionSession)
         private readonly sessionRepository: Repository<SelectionSession>,
         private readonly usersService: UsersService,
+        private readonly citiesService: CitiesService,
     ) {}
 
     async findAll(): Promise<SelectionSession[]> {
@@ -29,21 +31,22 @@ export class SelectionSessionsService {
     async findOne(id: number): Promise<SelectionSession> {
         const session = await this.sessionRepository.findOne({
             where: { id },
-            relations: [
-                'user',
-                'interests',
-                'interests.interestCategory',
-                'placeSelections',
-                'routes',
-            ],
+            relations: ['user', 'interests', 'placeSelections', 'routes'],
         });
-        if (!session) throw new NotFoundException(`Сессия id=${id} не найдена`);
+        if (!session) {
+            throw new NotFoundException(
+                `Selection session with ID ${id} not found`,
+            );
+        }
         return session;
     }
 
     async create(dto: CreateSelectionSessionDto): Promise<SelectionSession> {
         const user = await this.usersService.findOne(dto.user_id);
         if (!user) throw new NotFoundException('Пользователь не найден');
+
+        const city = await this.citiesService.findOne(dto.city_id);
+        if (!city) throw new NotFoundException('Город не найден');
 
         if (!dto.interests_ids?.length) {
             throw new BadRequestException(
@@ -53,6 +56,7 @@ export class SelectionSessionsService {
 
         const session = this.sessionRepository.create({
             user,
+            city,
             is_completed: false,
             interests: dto.interests_ids.map((id) => ({ id })),
         });
@@ -65,12 +69,20 @@ export class SelectionSessionsService {
         dto: UpdateSelectionSessionDto,
     ): Promise<SelectionSession> {
         const session = await this.findOne(id);
-        Object.assign(session, dto);
+
+        // обновляем только разрешённые поля
+        if (dto.is_completed !== undefined) {
+            session.is_completed = dto.is_completed;
+        }
+
         return this.sessionRepository.save(session);
     }
 
-    async remove(id: number): Promise<void> {
+    async remove(id: number): Promise<{ message: string }> {
         const session = await this.findOne(id);
         await this.sessionRepository.remove(session);
+        return {
+            message: `Selection session with ID ${id} deleted successfully`,
+        };
     }
 }

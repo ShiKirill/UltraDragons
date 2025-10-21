@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PlaceSelectionsController } from './place-selections.controller';
 import { PlaceSelectionsService } from './place-selections.service';
@@ -10,7 +10,7 @@ import { PlacesModule } from '../places/places.module';
     imports: [
         TypeOrmModule.forFeature([PlaceSelection]),
         SelectionSessionsModule,
-        PlacesModule,
+        forwardRef(() => PlacesModule),
     ],
     controllers: [PlaceSelectionsController],
     providers: [PlaceSelectionsService],

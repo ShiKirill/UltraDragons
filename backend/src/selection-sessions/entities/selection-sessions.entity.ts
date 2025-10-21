@@ -13,6 +13,7 @@ import { User } from 'src/users/entities/user.entity';
 import { PlaceSelection } from 'src/place-selections/entities/place-selections.entity';
 import { Route } from 'src/routes/entities/route.entity';
 import { InterestCategory } from 'src/interest-categories/entities/interest-category.entity';
+import { City } from 'src/cities/entities/city.entity';
 
 @Entity('selection_sessions')
 export class SelectionSession {
@@ -35,6 +36,13 @@ export class SelectionSession {
     @ManyToOne(() => User, (user) => user.selectionSessions)
     @JoinColumn({ name: 'user_id' })
     user: User;
+
+    @ManyToOne(() => City, { eager: true })
+    @JoinColumn({ name: 'city_id' })
+    city: City;
+
+    @Column({ name: 'city_id' })
+    cityId: number;
 
     @ManyToMany(
         () => InterestCategory,
