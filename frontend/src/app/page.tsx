@@ -1,12 +1,12 @@
 "use client";
 
 import { Home } from "@/modules/home";
-import { SuspensePage } from "@/shared/components/page";
+import { AppPage } from "@/shared/components/app-page";
 
 export default function HomePage() {
   return (
-    <SuspensePage>
+    <AppPage>
       <Home />
-    </SuspensePage>
+    </AppPage>
   );
 }

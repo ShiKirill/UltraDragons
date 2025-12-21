@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "@/shared/styles/globals.css";
+import { Box } from "@mui/material";
 
 import { ClientProviders } from "../../client-providers";
 
@@ -17,7 +18,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning>
-        <ClientProviders>{children}</ClientProviders>
+        <ClientProviders>
+          <Box
+            sx={{
+              minHeight: "100vh",
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#E7E7E7",
+            }}
+          >
+            {children}
+          </Box>
+        </ClientProviders>
       </body>
     </html>
   );

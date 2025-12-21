@@ -22,7 +22,8 @@
       "@/*": ["./src/*"],
       "@/api/*": ["./src/api/*"],
       "@/modules/*": ["./src/modules/*"],
-      "@/components/*": ["./src/shared/components/*"]
+      "@/components/*": ["./src/shared/components/*"],
+      "@/shared/*": ["./src/shared/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
