@@ -18,7 +18,7 @@ export function CircularProgressBar({
   const radius = 80;
   const circumference = 2 * Math.PI * radius;
 
-  // Функция для запуска анимации
+  // function to animate the circle and text
   const animate = () => {
     if (circleRef.current && textRef.current) {
       const offset = circumference - (progress / 100) * circumference;
@@ -41,7 +41,7 @@ export function CircularProgressBar({
     }
   };
 
-  // Автоматическая анимация при изменении progress
+  // automatic animation when progress changes
   useGSAP(
     () => {
       debugger;
@@ -52,10 +52,10 @@ export function CircularProgressBar({
     { dependencies: [progress, autoAnimate], scope: containerRef },
   );
 
-  // Expose animate function через ref или можно вызывать напрямую
+  // Expose animate function through ref or can be called directly
   useEffect(() => {
     if (!autoAnimate) {
-      // Если autoAnimate выключен, сразу устанавливаем значение без анимации
+      // if autoAnimate is disabled, set the value immediately without animation
       if (circleRef.current && textRef.current) {
         const offset = circumference - (progress / 100) * circumference;
         gsap.set(circleRef.current, { strokeDashoffset: offset });
@@ -68,7 +68,7 @@ export function CircularProgressBar({
     <div ref={containerRef} className="flex justify-center">
       <div className="relative">
         <svg width="200" height="200" className="transform -rotate-90">
-          {/* Фоновый круг */}
+          {/* background circle */}
           <circle
             cx="100"
             cy="100"
@@ -77,7 +77,7 @@ export function CircularProgressBar({
             stroke="rgba(255, 255, 255, 0.1)"
             strokeWidth="12"
           />
-          {/* Прогресс круг */}
+          {/* progress circle */}
           <circle
             ref={circleRef}
             cx="100"
@@ -98,7 +98,7 @@ export function CircularProgressBar({
             </linearGradient>
           </defs>
         </svg>
-        {/* Текст в центре */}
+        {/* text in the center */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span className="text-4xl font-bold text-white">
             <span ref={textRef}>0</span>%
