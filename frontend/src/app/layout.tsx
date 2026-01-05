@@ -4,6 +4,7 @@ import "@/shared/styles/globals.css";
 import { Box } from "@mui/material";
 
 import { ClientProviders } from "../../client-providers";
+import { raleway } from "./fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={raleway.variable}>
       <body suppressHydrationWarning>
         <ClientProviders>
           <Box
@@ -24,7 +25,6 @@ export default function RootLayout({
               minHeight: "100vh",
               display: "flex",
               flexDirection: "column",
-              backgroundColor: "#E7E7E7",
             }}
           >
             {children}
