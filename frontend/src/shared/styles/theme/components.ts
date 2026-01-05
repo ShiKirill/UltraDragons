@@ -1,7 +1,7 @@
 import type { Theme } from "@emotion/react";
 import type { Components, CssVarsTheme } from "@mui/material";
 
-const components: Components<
+export const components: Components<
   Omit<Theme, "components" | "palette"> & CssVarsTheme
 > = {
   MuiButtonBase: {
@@ -15,6 +15,14 @@ const components: Components<
         borderRadius: "12px",
         textTransform: "none",
         lineHeight: "24px",
+      },
+      text: {
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
+        "&:active": {
+          backgroundColor: "transparent",
+        },
       },
     },
   },
@@ -42,5 +50,3 @@ const components: Components<
     },
   },
 };
-
-export default components;

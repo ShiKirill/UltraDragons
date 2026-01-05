@@ -1,5 +1,18 @@
 {
   "HomePage": {
-    "title": "Home Page"
+    "title": "Home Page",
+    "mainTab": "Main",
+    "favoritesTab": "Favorites",
+    "historyTab": "History",
+    "startButton": "Start",
+    "lastRouteButton": "Last Route",
+    "buildRouteButton": "Build a Route",
+    "interestsText": "Select your interests"
+  },
+  "RoutesPage": {
+    "descriptionTab": "Description",
+    "reviewsTab": "Reviews",
+    "rateTab": "Rate",
+    "readyBtn": "Ready"
   }
 }

@@ -1,12 +1,12 @@
 "use client";
 
-import { Home } from "@/modules/home";
+import { Routes } from "@/modules/routes";
 import { PageWrapper } from "@/shared/components/page-wrapper";
 
-export default function HomePage() {
+export default function RoutesPage() {
   return (
     <PageWrapper>
-      <Home />
+      <Routes />
     </PageWrapper>
   );
 }

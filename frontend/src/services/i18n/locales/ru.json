@@ -1,5 +1,18 @@
 {
   "HomePage": {
-    "title": "Главная страница"
+    "title": "Главная страница",
+    "mainTab": "Главная",
+    "favoritesTab": "Избранное",
+    "historyTab": "История",
+    "startButton": "Начать",
+    "lastRouteButton": "Последний маршрут",
+    "buildRouteButton": "Построить маршрут",
+    "interestsText": "Выберите ваши интересы"
+  },
+  "RoutesPage": {
+    "descriptionTab": "Описание",
+    "reviewsTab": "Отзывы",
+    "rateTab": "Оценить",
+    "readyBtn": "Готово"
   }
 }

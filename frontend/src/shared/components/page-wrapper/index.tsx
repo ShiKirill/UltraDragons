@@ -6,7 +6,7 @@ import { Container } from "@mui/material";
 
 import { styles } from "./styles";
 
-export const AppPage = ({ children }: PropsWithChildren) => {
+export const PageWrapper = ({ children }: PropsWithChildren) => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Container sx={styles.container}>{children}</Container>

@@ -1,4 +1,3 @@
-import { LeaderLine } from "@/shared/components/leader-line";
 import { Box } from "@mui/material";
 
 import { StyledImage, styles } from "./styles";
@@ -13,11 +12,11 @@ export const Map = () => {
         height={600}
         objectFit="cover"
       />
-      <LeaderLine
+      {/* <LeaderLine
         from={{ x: 300, y: 150 }}
         middle={{ x: 350, y: 150 }}
         to={{ x: 380, y: 60 }}
-      />
+      /> */}
     </Box>
   );
 };
