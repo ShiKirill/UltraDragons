@@ -17,5 +17,28 @@ export const styles = createStyleMap(() => ({
     columnGap: "24px",
     rowGap: "20px",
   },
-  contentRight: {},
+  description: {
+    display: "flex",
+    minWidth: 0,
+  },
+  list: {
+    listStyle: "none",
+    minWidth: 0,
+  },
+  listItemIcon: {
+    display: "flex",
+    flexShrink: 0,
+  },
+  listItem: {
+    display: "flex",
+    alignItems: "center",
+    columnGap: "8px",
+
+    "& .MuiTypography-root": {
+      width: "100%",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+    },
+  },
 }));
