@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import "@/shared/styles/globals.css";
 import { Box } from "@mui/material";
+import "keen-slider/keen-slider.min.css";
 
 import { ClientProviders } from "../../client-providers";
 import { raleway } from "./fonts";

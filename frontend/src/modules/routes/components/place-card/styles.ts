@@ -11,30 +11,22 @@ export const styles = createStyleMap(() => ({
   imageWrapper: {
     maxWidth: "536px",
     width: "100%",
-    height: "800px",
-
-    "& img": {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-      borderRadius: "60px 60px 0 0",
-    },
   },
   textWrapper: {
     display: "flex",
     flexDirection: "column",
     width: "100%",
     minHeight: "500px",
+    height: "800px",
   },
 
   buttonWrapper: {
     display: "flex",
-    flexDirection: "column",
+    alignItems: "center",
     justifyContent: "center",
     rowGap: "8px",
-    width: "264px",
-    marginInline: "auto",
-    marginBottom: '50px',
+    columnGap: "32px",
+    marginBottom: "50px",
 
     "& .MuiButton-root": {
       height: "80px",

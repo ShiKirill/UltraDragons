@@ -1,14 +1,15 @@
 "use-client";
 
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
+import { AcceptButton, RejectButton } from "@/shared/components/buttons";
 import { AppTabs } from "@/shared/components/tabs";
 import { Box, Button } from "@mui/material";
 
 import { IPlace } from "@/api/services/types";
 
 import { DescriptionTab } from "../description-tab";
+import { ImageSlider } from "../image-slider";
 import { styles } from "./styles";
 
 export const PlaceCard = ({ place }: { place: IPlace }) => {
@@ -17,13 +18,7 @@ export const PlaceCard = ({ place }: { place: IPlace }) => {
   return (
     <Box sx={styles.wrapper}>
       <Box sx={styles.imageWrapper}>
-        <Image
-          // TODO: use main cover picture
-          src={place.pictures?.[0] ?? ""}
-          alt={place.name}
-          width={300}
-          height={300}
-        />
+        <ImageSlider images={place.pictures} />
       </Box>
 
       <Box sx={styles.textWrapper}>
@@ -39,9 +34,13 @@ export const PlaceCard = ({ place }: { place: IPlace }) => {
           }}
         >
           <Box sx={styles.buttonWrapper}>
+            <RejectButton />
+
             <Button fullWidth variant="contained">
               {t("readyBtn")}
             </Button>
+
+            <AcceptButton />
           </Box>
         </AppTabs>
       </Box>
